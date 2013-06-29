@@ -3,11 +3,11 @@
 Zach Holman: "Your dotfiles are how you personalize your system. These are mine."
 
 I decided to put up my dotfiles one because sharing is caring, but the more obvious two is I was
-tired of people asking me "Where did you get that?" "How did you do that?"
+tired of people asking me "Where did you get that?" or "How did you do that?"
 
 ## Installation
 
-After forking or downloading the dotfiles you can install them to $HOME with install.sh
+After forking or downloading the dotfiles you can install them to $HOME with install.sh  
 Alternatively they can be symlinked to $HOME with symlink.sh
 
 ## Whats Inside
