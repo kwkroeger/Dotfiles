@@ -13,6 +13,7 @@ ln -s $PWD/bash_profile $HOME/.bash_profile
 ln -s $PWD/colordiff $HOME/.colordiff
 ln -s $PWD/colordiffrc $HOME/.colordiffrc
 ln -s $PWD/htop $HOME/.htop
+ln -s $PWD/htop $HOME/.htoprc
 ln -s $PWD/lesspipe $HOME/.lesspipe
 ln -s $PWD/profile $HOME/.profile
 ln -s $PWD/smem $HOME/.smem

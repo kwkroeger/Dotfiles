@@ -11,6 +11,7 @@ cp -r bash_profile $HOME/.bash_profile
 cp -r colordiff $HOME/.colordiff
 cp -r colordiffrc $HOME/.colordiffrc
 cp -r htop $HOME/.htop
+cp -r htoprc $HOME/.htoprc
 cp -r lesspipe $HOME/.lesspipe
 cp -r profile $HOME/.profile
 cp -r smem $HOME/.smem
