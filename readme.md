@@ -2,8 +2,8 @@
 
 Zach Holman: "Your dotfiles are how you personalize your system. These are mine."
 
-I decided to put up my dotfiles one because sharing is caring, but the more obvious two is I was
-tired of people asking me "Where did you get that?" or "How did you do that?"
+I decided to put up my dotfiles because one sharing is caring, and two I can redirect people
+who have questions about my environment here instead of trying to explain everything.
 
 ## Installation
 
@@ -17,6 +17,7 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 - **colordiff**: Perl wrapper for diff 
 - **colordiffrc**: colordiff configuration file
 - **htop**: Like top, but far better [http://htop.sourceforge.net/](http://htop.sourceforge.net/)
+- **htoprc**: htop configurationf file
 - **lesspipe/**: Preprocessor for less [http://sourceforge.net/projects/lesspipe/](http://sourceforge.net/projects/lesspipe/)
 - **profile**: Sources my bash_profile, which sources my bashrc
 - **smem**:  Memory Reporting Tool, [http://www.selenic.com/smem/](http://www.selenic.com/smem/)
