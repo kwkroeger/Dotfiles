@@ -6,6 +6,7 @@
 
 echo "Installing to $HOME"
 
+cp -r ack $HOME/.ack
 cp -r bashrc $HOME/.bashrc
 cp -r bash_profile $HOME/.bash_profile
 cp -r colordiff $HOME/.colordiff

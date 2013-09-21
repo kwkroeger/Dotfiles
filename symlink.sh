@@ -8,6 +8,7 @@ echo "Linking to $HOME"
 
 export PWD=$(pwd)
 
+ln -s $PWD/ack $HOME/.ack
 ln -s $PWD/bashrc $HOME/.bashrc
 ln -s $PWD/bash_profile $HOME/.bash_profile
 ln -s $PWD/colordiff $HOME/.colordiff
