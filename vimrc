@@ -30,9 +30,6 @@ set autoread
 let mapleader = ","
 let g:mapleader = ","
 
-" Fast saving
-nmap <leader>w :w!<cr>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -167,7 +164,20 @@ set encoding=utf-8
 set nocp
 set nocompatible
 
-nnoremap <silent> <F9> :TagbarToggle<CR>
+" Quick Exiting and Saving
+nnoremap <silent> q :q!<CR>
+nnoremap <silent> w :w!<CR>
+
+" Paste is useful when pasting from non-vim sources
+nnoremap <silent> <F2> :set paste<CR>
+nnoremap <silent> <F3> :set nopaste<CR> 
+
+"Toggle Tagbar
+nnoremap <silent> <F9> :TagbarToggle<CR> 
+
+"Easy Window Switching
+nmap <silent> n :wincmd h<CR>
+nmap <silent> m :wincmd l<CR>
 
 call pathogen#infect()
 call pathogen#helptags()
