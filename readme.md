@@ -2,9 +2,6 @@
 
 Zach Holman: "Your dotfiles are how you personalize your system. These are mine."
 
-I decided to put up my dotfiles because one sharing is caring, and two I can redirect people
-who have questions about my environment here instead of trying to explain everything.
-
 ## Installation
 
 After forking or downloading the dotfiles you can install them to $HOME with install.sh  
