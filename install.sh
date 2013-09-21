@@ -6,17 +6,17 @@
 
 echo "Installing to $HOME"
 
-cp -r ack $HOME/.ack
-cp -r bashrc $HOME/.bashrc
-cp -r bash_profile $HOME/.bash_profile
-cp -r colordiff $HOME/.colordiff
-cp -r colordiffrc $HOME/.colordiffrc
-cp -r htop $HOME/.htop
-cp -r htoprc $HOME/.htoprc
-cp -r lesspipe $HOME/.lesspipe
-cp -r profile $HOME/.profile
-cp -r smem $HOME/.smem
-cp -r vim $HOME/.vim
-cp -r vimrc $HOME/.vimrc
+mv -f ack $HOME/.ack
+mv -f bashrc $HOME/.bashrc
+mv -f bash_profile $HOME/.bash_profile
+mv -f colordiff $HOME/.colordiff
+mv -f colordiffrc $HOME/.colordiffrc
+mv -f htop $HOME/.htop
+mv -f htoprc $HOME/.htoprc
+mv -f lesspipe $HOME/.lesspipe
+mv -f profile $HOME/.profile
+mv -f smem $HOME/.smem
+mv -f vim $HOME/.vim
+mv -f vimrc $HOME/.vimrc
 
 echo "Done"
