@@ -15,8 +15,10 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 - **colordiffrc**: colordiff configuration file
 - **htop**: Like top, but far better [http://htop.sourceforge.net/](http://htop.sourceforge.net/)
 - **htoprc**: htop configurationf file
+= **install.sh**: Script to cp dotfiles to $HOME
 - **lesspipe/**: Preprocessor for less [http://sourceforge.net/projects/lesspipe/](http://sourceforge.net/projects/lesspipe/)
 - **profile**: Sources my bash_profile, which sources my bashrc
 - **smem**:  Memory Reporting Tool, [http://www.selenic.com/smem/](http://www.selenic.com/smem/)
+- **symlink.sh**: Symlinks dotfiles to $HOME
 - **vim/**: Folder Holding vim modules
 - **vimrc**: Vim configuration file
