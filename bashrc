@@ -27,6 +27,7 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   alias gti='git'
 
   #Programs and Script's I can't live without
+  alias ack="$HOME/.ack"
   alias htop="$HOME/.htop"
   alias smem="$HOME/.smem"
   
