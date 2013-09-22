@@ -176,8 +176,13 @@ nnoremap <silent> <F3> :set nopaste<CR>
 nnoremap <silent> <F9> :TagbarToggle<CR> 
 
 "Easy Window Switching
-nmap <silent> n :wincmd h<CR>
-nmap <silent> m :wincmd l<CR>
+nmap <silent> <C-m> :wincmd l<CR>
+
+"My large hands need more space
+noremap k h
+"noremap l l
+noremap ; j
+noremap ' k
 
 call pathogen#infect()
 call pathogen#helptags()
