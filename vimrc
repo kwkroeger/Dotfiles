@@ -183,6 +183,8 @@ noremap k h
 "noremap l l
 noremap ; j
 noremap ' k
+noremap j <Nop>
+noremap h <Nop>
 
 call pathogen#infect()
 call pathogen#helptags()
