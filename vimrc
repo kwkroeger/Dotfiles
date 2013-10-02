@@ -178,13 +178,14 @@ nnoremap <silent> <F9> :TagbarToggle<CR>
 "Easy Window Switching
 nmap <silent> <C-m> :wincmd l<CR>
 
-"My large hands need more space
-noremap k h
-"noremap l l
+"I like arrow keys
+noremap p k
+noremap ' l
+noremap l h
 noremap ; j
-noremap ' k
-noremap j <Nop>
 noremap h <Nop>
+noremap j <Nop>
+noremap k <Nop>
 
 call pathogen#infect()
 call pathogen#helptags()
