@@ -41,7 +41,7 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   #Only use X11 Forwarding Explicitly
 
   alias ssh='ssh -x'
-  alias ssy='ssh -CY'
+  alias ssy='ssh -CX -c arcfour,blowfish-cbc'
 
 ### COMPLETION ###	
   complete -cf sudo
