@@ -8,7 +8,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   alias c='clear'
   
   #Make Things Look Nice
-  alias cat="cat -n"
   alias df='df -h'
   alias du='du -ch'
   alias diff="$HOME/.colordiff"
