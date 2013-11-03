@@ -16,6 +16,7 @@ ln -s $PWD/colordiffrc $HOME/.colordiffrc
 ln -s $PWD/htop $HOME/.htop
 ln -s $PWD/htop $HOME/.htoprc
 ln -s $PWD/lesspipe $HOME/.lesspipe
+ln -s $PWD/osx $HOME/.osx
 ln -s $PWD/profile $HOME/.profile
 ln -s $PWD/smem $HOME/.smem
 ln -s $PWD/vim $HOME/.vim

@@ -13,6 +13,7 @@ cp -f colordiff $HOME/.colordiff
 cp -f colordiffrc $HOME/.colordiffrc
 cp -f htop $HOME/.htop
 cp -f htoprc $HOME/.htoprc
+cp -f osx $HOME/.osx
 
 #Folder merge workaround
 cp -rf lesspipe .lesspipe
