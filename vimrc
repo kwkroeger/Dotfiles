@@ -92,7 +92,7 @@ set tm=500
 " Enable syntax highlighting
 syntax enable
 set background=light
-colorscheme grb256
+colorscheme molokai
 
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
