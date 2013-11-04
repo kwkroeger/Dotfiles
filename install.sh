@@ -35,5 +35,6 @@ cp -rf .vim $HOME
 rm -rf .vim
 
 cp -f vimrc $HOME/.vimrc
+cp -f wgetrc $HOME/.wgetrc
 
 echo "Done"
