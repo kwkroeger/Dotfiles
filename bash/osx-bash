@@ -7,6 +7,7 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
 
   alias c='clear'
   alias g='git'
+  alias vi='vim'
 
   #Make Things Look Nice
   alias df='df -h'
@@ -27,8 +28,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   alias sudo='sudo '
 
   #Ease of Use
-  alias mdstat='cat /proc/mdstat'
-  alias ports='netstat -tulanp'
   alias wget='wget -c'
 
   #Sorry Steam Locomotive and GTI
@@ -37,8 +36,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
 
   #Programs and Script's I can't live without
   alias ack="$HOME/.ack"
-  alias htop="$HOME/.htop"
-  alias smem="$HOME/.smem"
 
   #Easy Update of System (Only Applicable to OSX)
   alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; gem update'

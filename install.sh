@@ -10,6 +10,8 @@ cp -f ack $HOME/.ack
 cp -f bash_profile $HOME/.bash_profile
 cp -f colordiff $HOME/.colordiff
 cp -f colordiffrc $HOME/.colordiffrc
+cp -f gitconfig $HOME/.gitconfig
+cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop
 cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
