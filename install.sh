@@ -30,6 +30,11 @@ cp -f profile $HOME/.profile
 cp -f smem $HOME/.smem
 
 #Folder merge workaround
+cp -rf phitools .phitools
+cp -rf .phitools $HOME
+rm -rf .phitools
+
+#Folder merge workaround
 cp -rf vim .vim
 cp -rf .vim $HOME
 rm -rf .vim

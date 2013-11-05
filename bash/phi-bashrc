@@ -3,8 +3,10 @@
 
 export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\e[0m\] \[\e[1;91m\]:\[\e[0m\]"
 
+export PATH=$HOME/.phitools:$PATH
+
 if [[ $SHELL == "/bin/sh" ]]; then
-    ~/.bash/phibash
+  bash
 fi
 
 ### ALIASES ###
@@ -27,11 +29,6 @@ fi
   alias mdstat='cat /proc/mdstat'
   alias ports='netstat -tulanp'
   alias wget='wget -c'
-
-  #Programs and Script's I can't live without
-  alias ack="$HOME/.ack"
-  alias htop="$HOME/.htop"
-  alias smem="$HOME/.smem"
 
   #Easier Back Navigation
 
