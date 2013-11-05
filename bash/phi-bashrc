@@ -28,10 +28,6 @@ fi
   alias ports='netstat -tulanp'
   alias wget='wget -c'
 
-  #Sorry Steam Locomotive and GTI
-  alias sl='ls'
-  alias gti='git'
-
   #Programs and Script's I can't live without
   alias ack="$HOME/.ack"
   alias htop="$HOME/.htop"
@@ -58,17 +54,35 @@ fi
   export SVN_EDITOR='vim'
   export VISUAL='vim'
 
+  ## LANGUAGE ##
+  export LANG="en_US"
+  export LC_ALL="en_US.UTF-8"
+
   ## LESS ##
   export LESSOPEN='|$HOME/.lesspipe/lesspipe.sh %s'
   export LESS='-R'
 
   ## HISTORY ##
-  set history=500
   export HISTCONTROL='ignoredups:ignoreboth'
-  export HISTTIMEFORMAT="%a %F %r " 
+  export HISTSIZE=16384
+  export HISTFILESIZE=$HISTSIZE
+  export HISTTIMEFORMAT="%a %F %r "
   export HISTIGNORE='&:[ ]*:clear:exit'
   export PROMPT_COMMAND='history -a; history -r'
+  shopt -s cmdhist
+  shopt -s histappend
+
+  ## MAIL ##
+  shopt -u mailwarn
+  unset MAILCHECK
+
+  ## MANPAGES ##
+  export LESS_TERMCAP_md="\033[1;33m"
+  export MANPAGER="less -X"
 
   ## TERMINAL ##
   export TERM=xterm-256color
   force_color_prompt=yes
+  shopt -s cdspell
+  shopt -s checkwinsize
+  shopt -s nocaseglob
