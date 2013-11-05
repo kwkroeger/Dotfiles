@@ -2,7 +2,7 @@
 
 Zach Holman: "Your dotfiles are how you personalize your system. These are mine."
 
-My dotfiles are pretty standard, sort of a piecemeal of others like mathiasbynens and holman.
+My dotfiles are pretty standard, sort of a piecemeal of others like holman and mathiasbynens.
 However I dont know of anyone else with dotfiles that handle the Xeon Phi, so thats fun.
 
 ## Installation
@@ -12,10 +12,13 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 
 ## Whats Inside
 
+- **ack**: Like grep but cooler [http://beyondgrep.com/](http://beyondgrep.com/)
 - **bash_profile**: Sources sysetm specific bashrc
 - **bash/**:  Holds Bash configurations file
 - **colordiff**: Perl wrapper for diff 
 - **colordiffrc**: colordiff configuration file
+- **gitconfig**: git configuration file
+- ** gitignore**: git ignore
 - **htop**: Like top, but far better [http://htop.sourceforge.net/](http://htop.sourceforge.net/)
 - **htoprc**: htop configuration file
 - **install.sh**: Script to cp dotfiles to $HOME
@@ -26,3 +29,4 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 - **symlink.sh**: Symlinks dotfiles to $HOME
 - **vim/**: Folder Holding vim modules
 - **vimrc**: Vim configuration file
+- **wgetrc**: wget configuration file
