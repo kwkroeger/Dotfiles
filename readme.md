@@ -18,7 +18,7 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 - **colordiff**: Perl wrapper for diff 
 - **colordiffrc**: colordiff configuration file
 - **gitconfig**: git configuration file
-- ** gitignore**: git ignore
+- **gitignore**: git ignore
 - **htop**: Like top, but far better [http://htop.sourceforge.net/](http://htop.sourceforge.net/)
 - **htoprc**: htop configuration file
 - **install.sh**: Script to cp dotfiles to $HOME
