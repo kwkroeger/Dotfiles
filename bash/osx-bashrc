@@ -3,6 +3,10 @@
 
 export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\e[0m\] \[\e[1;91m\]:\[\e[0m\]"
 
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export MANPATH="/usr/local/opt/coreutils/libexec/gnuman"
+export LD_LIBRARY_PATH="/usr/gcc/lib:/usr/local/lib"
+
 ### ALIASES ###
 
   alias c='clear'
@@ -38,7 +42,7 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   alias ack="$HOME/.ack"
 
   #Easy Update of System (Only Applicable to OSX)
-  alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; gem update'
+  alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update'
 
   #Clean System (Only Applicable to OSX)
   alias cleanup="cd $HOME; find . -type f -name '*.DS_Store' -ls -delete"
@@ -64,6 +68,12 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
       . /etc/bash_completion
   fi
 
+  if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
+    for completion in /usr/local/etc/bash_completion.d/*;do
+      . /usr/local/etc/bash_completion.d/completion
+    done
+  fi
+
 ### FUNCTIONS ###
   
   extract () {
@@ -87,10 +97,26 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
        echo "'$1' is not a valid file!"
    fi
   }
+
+  installcask() {
+    brew cask install "${@}" 2> /dev/null
+  }
   
 ### VARIABLES ###
 
   export BLOCKSIZE=M
+
+  ## COMPILING ##
+  export CC="gcc"
+  export CXX="g++"
+  export LD="ld"
+
+  export CHOST="x86_64-apple-darwin13"
+  export MACOSX_DEPLOYMENT_TARGET="10.9"
+
+  export CFLAGS="-march=native -O2 -pipe"
+  export CXXFLAGS="${CFLAGS}"
+  export LDFLAGS="-Wl,-dead_strip_dylibs"
 
   ## EDITOR ##
   export EDITOR='vim'
@@ -129,3 +155,5 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   shopt -s cdspell
   shopt -s checkwinsize
   shopt -s nocaseglob
+
+cd $HOME
