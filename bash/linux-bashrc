@@ -86,10 +86,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   export SVN_EDITOR='vim'
   export VISUAL='vim'
 
-  ## LANGUAGE ##
-  export LANG="en_US"
-  export LC_ALL="en_US.UTF-8"
-
   ## LESS ##
   export LESSOPEN='|$HOME/.lesspipe/lesspipe.sh %s'
   export LESS='-R'

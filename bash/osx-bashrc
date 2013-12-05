@@ -123,10 +123,6 @@ export LD_LIBRARY_PATH="/usr/gcc/lib:/usr/local/lib"
   export SVN_EDITOR='vim'
   export VISUAL='vim'
 
-  ## LANGUAGE ##
-  export LANG="en_US"
-  export LC_ALL="en_US.UTF-8"
-
   ## LESS ##
   export LESSOPEN='|$HOME/.lesspipe/lesspipe.sh %s'
   export LESS='-R'
