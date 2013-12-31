@@ -11,10 +11,10 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -30,11 +30,11 @@ set autoread
 let mapleader = ","
 let g:mapleader = ","
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"Turn off auto comment
+
+" Turn off auto comment
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 " Turn on the WiLd menu
@@ -43,7 +43,7 @@ set wildmenu
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
-"Always show current position
+" Always show current position
 set ruler
 
 " Height of the command bar
@@ -85,34 +85,33 @@ set novisualbell
 set t_vb=
 set tm=500
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Enable syntax highlighting
 syntax enable
+
+" Theme
 set background=light
 colorscheme molokai
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
 
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Files, backups and undo
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Turn backup off, since most stuff is in SVN, git et.c anyway...
 set nobackup
 set nowb
 set noswapfile
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " Use spaces instead of tabs
 set expandtab
 
@@ -139,28 +138,23 @@ set viminfo^=%
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Moving around, tabs, windows and buffers
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Treat long lines as break lines (useful when moving around in them)
-map j gj
-map k gk
 
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
 map <space> /
 map <c-space> ?
 
-
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
+
 " Always show the status line
 set laststatus=2
-
-" Format the status line
-"set statusline=%t\ \%h%m%r%y%=%c,%l/%L\ %P
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Addons
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set encoding=utf-8
+
+set encoding=utf8
 set nocp
 set nocompatible
 
@@ -172,20 +166,31 @@ nnoremap <silent> w :w!<CR>
 nnoremap <silent> <F2> :set paste<CR>
 nnoremap <silent> <F3> :set nopaste<CR> 
 
-"Toggle Tagbar
+" Toggle Tagbar
 nnoremap <silent> <F9> :TagbarToggle<CR> 
 
-"Easy Window Switching
+" Easy Window Switching
 nmap <silent> <C-m> :wincmd l<CR>
 
-"I like arrow keys
-noremap p k
+" note: For those forking my repo, these bindings are highly customized
+
+" I like my arrow keys closer
+noremap p gk
 noremap ' l
 noremap l h
-noremap ; j
+noremap ; gj
 noremap h <Nop>
 noremap j <Nop>
 noremap k <Nop>
+noremap gk <Nop>
+noremap gj <Nop>
 
+" More intuitive start and end
+noremap <buffer> <silent> - 0
+noremap <buffer> <silent> = $
+noremap 0 <Nop>
+noremap $ <Nop>
+
+" Call plugins from Pathogen
 call pathogen#infect()
 call pathogen#helptags()
