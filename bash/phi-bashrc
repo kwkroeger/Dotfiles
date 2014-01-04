@@ -73,7 +73,7 @@ fi
   export MANPAGER="less -X"
 
   ## TERMINAL ##
-  if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+  if [[ -a /usr/share/terminfo/x/xterm-256color || -a /usr/share/terminfo/x/xterm+256color ]]; then
     export TERM=xterm-256color
   else
     export TERM=xterm-color
@@ -83,3 +83,5 @@ fi
   shopt -s cdspell
   shopt -s checkwinsize
   shopt -s nocaseglob
+
+cd $HOME

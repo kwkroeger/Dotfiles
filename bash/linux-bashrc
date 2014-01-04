@@ -109,7 +109,7 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
 
   ## TERMINAL ##
 
-  if [ -e /usr/share/terminfo/x/xterm-256color ]; then
+  if [[ -a /usr/share/terminfo/x/xterm-256color || -a /usr/share/terminfo/x/xterm+256color ]]; then 
     export TERM=xterm-256color
   else
     export TERM=xterm-color
@@ -119,3 +119,5 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   shopt -s cdspell
   shopt -s checkwinsize
   shopt -s nocaseglob
+
+cd $HOME
