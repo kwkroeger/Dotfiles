@@ -70,7 +70,6 @@ fi
   unset MAILCHECK
 
   ## MANPAGES ##
-  export LESS_TERMCAP_md="\033[1;33m"
   export MANPAGER="less -X"
 
   ## TERMINAL ##
