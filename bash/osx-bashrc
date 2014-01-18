@@ -76,7 +76,7 @@ export LD_LIBRARY_PATH="/usr/gcc/lib:/usr/local/lib"
 
 ### FUNCTIONS ###
   
-  extract () {
+  e () {
     if [ -f $1 ] ; then
       case $1 in
         *.tar.bz2)  tar xvjf $1 && cd $(basename "$1" .tar.bz2) ;;
