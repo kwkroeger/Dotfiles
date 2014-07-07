@@ -2,16 +2,10 @@
 
 SYSTEM=`uname -a`
 
-if [[ $SHELL == "/bin/sh" ]]; then
-  source ~/.bash/phi-bashrc
-
-elif [[ $SYSTEM =~ .*k1om.* ]]; then
-  source ~/.bash/phi-bashrc
-
-elif [[ $SYSTEM =~ .*Darwin.* ]]; then
-  source ~/.bash/osx-bashrc
+if [[ $SYSTEM =~ .*k1om.* ]]; then
+  source ~/.phi-bashrc
 
 else
-  source ~/.bash/linux-bashrc
+  source ~/.bashrc
 
 fi
