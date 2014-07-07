@@ -1,0 +1,30 @@
+### OSX ADDITIONS ###
+  export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  export MANPATH="/usr/local/opt/coreutils/libexec/gnuman"
+  export LD_LIBRARY_PATH="/usr/gcc/lib:/usr/local/lib"
+
+  # Easy Update of System
+  alias update='sudo -v; softwareupdate -i -a; brew update; brew upgrade; brew cleanup; sudo gem update'
+
+  # Clean System
+  alias cleanup="cd $HOME; find . -type f -name '*.DS_Store' -ls -delete"
+  alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl"
+  alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
+
+  installcask() {
+    brew cask install "${@}" 2> /dev/null
+  }
+  
+  ## COMPILING ##
+  export CC="gcc"
+  export CXX="g++"
+  export LD="ld"
+
+  export CHOST="x86_64-apple-darwin13"
+  export MACOSX_DEPLOYMENT_TARGET="10.9"
+
+  export CFLAGS="-march=native -O2 -pipe"
+  export CXXFLAGS="${CFLAGS}"
+  export LDFLAGS="-Wl,-dead_strip_dylibs"
+
+cd $HOME
