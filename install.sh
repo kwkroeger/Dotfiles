@@ -13,6 +13,7 @@ cp -f colordiffrc $HOME/.colordiffrc
 cp -f gitconfig $HOME/.gitconfig
 cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop
+cp -f iotop $HOME/.iotop
 cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
 cp -f phi-bashrc $HOME/.phi-bashrc
