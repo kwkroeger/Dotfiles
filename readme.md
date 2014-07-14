@@ -8,7 +8,6 @@ However I dont know of anyone else with dotfiles that handle the Xeon Phi, so th
 ## Installation
 
 After forking or downloading the dotfiles you can install them to $HOME with install.sh 
-Alternatively they can be symlinked to $HOME with symlink.sh
 
 ## Whats Inside
 
