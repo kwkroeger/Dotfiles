@@ -28,6 +28,7 @@ Alternatively they can be symlinked to $HOME with symlink.sh
 - **phi-bashrc** Xeon Phi bashrc
 - **phitools** Bash and htop for the Xeon Phi
 - **profile**: Sources bash_profile
+- **pt/** The Platinum Searcher, like Ack but faster [https://github.com/monochromegane/the_platinum_searcher](https://github.com/monochromegane/the_platinum_searcher)
 - **smem**:  Memory Reporting Tool, [http://www.selenic.com/smem/](http://www.selenic.com/smem/)
 - **vim/**: Folder Holding vim modules
 - **vimrc**: Vim configuration file
