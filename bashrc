@@ -118,4 +118,13 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   shopt -s checkwinsize
   shopt -s nocaseglob
 
+## Personal Addons
+alias update='brew update; brew upgrade; brew cleanup; sudo gem update'
+
+#RCAC Addition
+alias edac='grep "[0-9]" /sys/devices/system/edac/mc/mc*/csrow*/ch*_ce_count; grep "[0-9]" /sys/devices/system/edac/mc/mc*/ue_count; grep "[0-9]" /sys/devices/system/edac/mc/mc*/ce_count'
+alias cfupdate="sudo /var/cfengine/bin/cfagent -qvK"
+alias shatter="rdesktop shatter2 -g 1680x1050"
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/site/rcac/scripts:/sbin:/usr/pbs/bin/:/apps/rhel5/iperf/bin:/usr/sbin:/opt/condor/sbin
+
 cd $HOME
