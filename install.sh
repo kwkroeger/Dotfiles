@@ -16,11 +16,9 @@ cp -f htop $HOME/.htop
 cp -f iotop $HOME/.iotop
 cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
-cp -f phi-bashrc $HOME/.phi-bashrc
 
 SYSTEM=`uname -a`
 if [[ $SYSTEM =~ .*Darwin.* ]]; then
-  cat osx-bashrc >> $HOME/.bashrc
   cp -f pt/osx-pt $HOME/.pt
 else
   cp -f pt/linux-pt $HOME/.pt

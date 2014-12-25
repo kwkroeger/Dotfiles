@@ -32,7 +32,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   #Programs and Script's I can't live without
   alias ack="$HOME/.pt"
   alias htop="$HOME/.htop"
-  alias iotop="$HOME/.iotop"
   alias pt="$HOME/.pt"
   alias smem="$HOME/.smem"
 
@@ -110,9 +109,6 @@ export PS1="\[\e[0;91m\]\u\[\e[0;36m\]@\[\e[0;91m\]\h\[\e[0m\] \[\e[0;36m\]\W\[\
   ## MAIL ##
   shopt -u mailwarn
   unset MAILCHECK
-
-  ## MANPAGES ##
-  export MANPAGER="less -X"
 
   ## TERMINAL ##
   export TERM=xterm-256color

@@ -1,5 +1,0 @@
-export PATH=$HOME/.phitools:$PATH
-
-if [[ $SHELL == "/bin/sh" ]]; then
-  bash
-fi

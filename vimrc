@@ -174,17 +174,6 @@ nmap <silent> <C-m> :wincmd l<CR>
 
 " note: For those forking my repo, these bindings are highly customized
 
-" I like my arrow keys closer
-noremap p gk
-noremap ' l
-noremap l h
-noremap ; gj
-noremap h <Nop>
-noremap j <Nop>
-noremap k <Nop>
-noremap gk <Nop>
-noremap gj <Nop>
-
 " More intuitive start and end
 noremap <buffer> <silent> - 0
 noremap <buffer> <silent> = $
