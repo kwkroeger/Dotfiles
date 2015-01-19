@@ -13,7 +13,6 @@ cp -f colordiffrc $HOME/.colordiffrc
 cp -f gitconfig $HOME/.gitconfig
 cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop
-cp -f iotop $HOME/.iotop
 cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
 
@@ -30,10 +29,6 @@ rm -rf .lesspipe
 
 cp -f profile $HOME/.profile
 cp -f smem $HOME/.smem
-
-cp -rf phitools .phitools
-cp -rf .phitools $HOME
-rm -rf .phitools
 
 cp -rf vim .vim
 cp -rf .vim $HOME
