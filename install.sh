@@ -15,7 +15,7 @@ cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop
 cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
-cp -f .zshrc $HOME/.zshrc
+cp -f zshrc $HOME/.zshrc
 
 SYSTEM=`uname -a`
 if [[ $SYSTEM =~ .*Darwin.* ]]; then
