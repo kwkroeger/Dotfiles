@@ -13,3 +13,9 @@
 [submodule "vim/bundle/c-syntax"]
 	path = vim/bundle/c-syntax
 	url = https://github.com/justinmk/vim-syntax-extra.git
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar
+[submodule "vim/bundle/python-syntax"]
+	path = vim/bundle/python-syntax
+	url = git://github.com/majutsushi/tagbar
