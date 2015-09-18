@@ -1,0 +1,15 @@
+"*":
+  welcome:
+    showOnStartup: false
+  core:
+    themes: [
+      "atom-dark-ui"
+      "base16-tomorrow-dark-theme"
+    ]
+    audioBeep: false
+  editor:
+    lineHeight: 1.25
+    invisibles: {}
+    fontSize: 15
+    showIndentGuide: true
+    showInvisibles: true
