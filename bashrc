@@ -139,6 +139,7 @@ unset color_cursor
   alias df='df -h'
   alias du='du -ch'
   alias diff="$HOME/.colordiff"
+  alias gcp="$HOME/.gcp/gcp"
   alias grep='grep --color=auto'
   alias ls='ls -hF --color=auto'
   alias mkdir='mkdir -pv'

@@ -1,0 +1,689 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+"""
+gcp: Goffi's CoPier
+Copyright (C) 2010, 2011  Jérôme Poisson <goffi@goffi.org>
+          (c) 2011        Thomas Preud'homme <robotux@celest.fr>
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+"""
+
+### logging ###
+import logging
+from logging import debug, info, error, warning
+logging.basicConfig(level=logging.INFO,
+                    format='%(message)s')
+###
+
+import gettext
+gettext.install('gcp', "i18n", unicode=True)
+
+import sys
+import os,os.path
+from optparse import OptionParser, OptionGroup #To be replaced by argparse ASAP
+import cPickle as pickle
+try:
+    import gobject
+    #DBus
+    import dbus, dbus.glib
+    import dbus.service
+    import dbus.mainloop.glib
+except ImportError,e:
+    error(_("Error during import"))
+    error(_("Please check dependecies:"),e)
+    exit(1)
+try:
+    from progressbar import ProgressBar, Percentage, Bar, ETA, FileTransferSpeed
+    pbar_available=True
+except ImportError, e:
+    info (_('ProgressBar not available, please download it at http://pypi.python.org/pypi/progressbar'))
+    info (_('Progress bar deactivated\n--\n'))
+    pbar_available=False
+
+NAME = "gcp (Goffi's copier)"
+NAME_SHORT = "gcp"
+VERSION = '0.1.3'
+
+ABOUT = NAME+u" v"+VERSION+u""" (c) Jérôme Poisson (aka Goffi) 2010, 2011
+
+---
+"""+NAME+u""" Copyright (C) 2010  Jérôme Poisson
+""" + _(u"""This program comes with ABSOLUTELY NO WARRANTY;
+This is free software, and you are welcome to redistribute it
+under certain conditions.
+---
+
+This software is an advanced file copier
+Get the latest version at http://www.goffi.org
+""")
+
+const_DBUS_INTERFACE = "org.goffi.gcp" 
+const_DBUS_PATH = "/org/goffi/gcp"
+const_BUFF_SIZE = 4096
+const_PRESERVE = set(['mode','ownership','timestamps'])
+const_FILES_DIR = "~/.gcp"
+const_JOURNAL_PATH = const_FILES_DIR + "/journal"
+const_SAVED_LIST = const_FILES_DIR + "/saved_list"
+
+
+
+class DbusObject(dbus.service.Object):
+
+    def __init__(self, gcp, bus, path):
+        self._gcp = gcp
+        dbus.service.Object.__init__(self, bus, path)
+        debug(_("Init DbusObject..."))
+        self.cb={}
+    
+    @dbus.service.method(const_DBUS_INTERFACE,
+                         in_signature='', out_signature='s')
+    def getVersion(self):
+        """Get gcp version
+        @return: version as string"""
+        return VERSION
+
+    @dbus.service.method(const_DBUS_INTERFACE,
+                         in_signature='ss', out_signature='bs')
+    def addArgs(self, source_dir, args):
+        """Add arguments to gcp as if there were entered on its own command line
+        @param source_dir: current working dir to use as base for arguments, as given by os.getcwd()
+        @param args: serialized (wich pickle) list of strings - without command name -, as given by sys.argv[1:].
+        @return: success (boolean) and error message if any (string)"""
+        try:
+            args = pickle.loads(str(args))
+        except TypeError, pickle.UnpicklingError:
+            return (False, _("INTERNAL ERROR: invalid arguments"))
+        try:
+            source_dir = pickle.loads(str(source_dir))
+        except TypeError, pickle.UnpicklingError:
+            return (False, _("INTERNAL ERROR: invalid source_dir"))
+        return self._gcp.parseArguments(args, source_dir)
+
+class Journal():
+    def __init__(self, path=const_JOURNAL_PATH):
+        self.journal_path = os.path.expanduser(path)
+        self.journal_fd = open(self.journal_path,'w') #TODO: check and maybe save previous journals
+        self.__entry_open = None
+        self.failed = []
+        self.partial = []
+
+    def __del__(self):
+        self.journal_fd.flush()
+        self.journal_fd.close()
+
+    def startFile(self, source_path):
+        """Start an entry in the journal"""
+        assert not self.__entry_open
+        self.__entry_open = source_path
+        self.journal_fd.write(source_path+"\n")
+        self.journal_fd.flush()
+        self.success=True
+        self.errors=[]
+
+    def closeFile(self):
+        """Close the entry in the journal"""
+        assert self.__entry_open
+        if not self.success:
+            status = "FAILED"
+        else:
+            status = "OK" if not self.errors else "PARTIAL"
+        self.journal_fd.write("%(status)s: %(errors)s\n" % {'status': status, 'errors': ', '.join(self.errors)})
+        self.journal_fd.flush()
+        self.__entry_open = None
+
+    def copyFailed(self):
+        """Must be called when something is wrong with the copy itself"""
+        assert self.__entry_open
+        self.success = False
+        self.failed.append(self.__entry_open)
+
+    def error(self, name):
+        """Something went wrong"""
+        assert self.__entry_open
+        self.errors.append(name)
+        self.partial.append(self.__entry_open)
+
+    def showErrors(self):
+        """Show which files were not successfully copied"""
+        failed = set(self.failed)
+        partial = set(self.partial)
+        for entry in failed:
+            partial.discard(entry)
+
+        if failed:
+            error(_("/!\\ THE FOLLOWING FILES WERE *NOT* SUCCESSFULY COPIED:"))
+            #TODO: use logging capability to print all error message in red
+            for entry in failed:
+                info("\t- %s" % entry)
+            info ('--\n')
+        if partial:
+            warning(_("The following files were copied, but some errors happened:"))
+            for entry in partial:
+                info("\t- %s" % entry)
+            info ('--\n')
+
+        if failed or partial:
+            info(_("Please check journal: %s") % self.journal_path)
+
+
+
+
+class GCP():
+
+    def __init__(self):
+        files_dir = os.path.expanduser(const_FILES_DIR)
+        if not os.path.exists(files_dir):
+            os.makedirs(files_dir)
+        try:
+            sessions_bus = dbus.SessionBus()
+            db_object = sessions_bus.get_object(const_DBUS_INTERFACE,
+                                const_DBUS_PATH)
+            self.gcp_main = dbus.Interface(db_object,
+                                dbus_interface=const_DBUS_INTERFACE)
+            self._main_instance = False
+
+        except dbus.exceptions.DBusException,e:
+            if e._dbus_error_name=='org.freedesktop.DBus.Error.ServiceUnknown':
+                self.launchDbusMainInstance()
+                debug (_("gcp launched"))
+                self._main_instance = True
+                self.buffer_size = const_BUFF_SIZE
+                self.__launched = False #True when journal is initialised and copy is started
+            else:
+                raise e
+
+    def launchDbusMainInstance(self):
+        debug (_("Init DBus..."))
+        session_bus = dbus.SessionBus()
+        self.dbus_name = dbus.service.BusName(const_DBUS_INTERFACE, session_bus)
+        self.dbus_object = DbusObject(self, session_bus, const_DBUS_PATH)
+
+        self.copy_list = []
+        self.mounts = self.__getMountPoints()
+        self.bytes_total = 0
+        self.bytes_copied = 0
+
+    def getFsType(self, path):
+        fs = ''
+        last_mount_point = ''
+        for mount in self.mounts:
+            if path.startswith(mount) and len(mount)>=len(last_mount_point):
+                fs = self.mounts[mount]
+                last_mount_point = mount
+        return fs
+
+    def __getMountPoints(self):
+        """Parse /proc/mounts to get currently mounted devices"""
+        #TODO: reparse when a new device is added/a device is removed
+        #(check freedesktop mounting signals)
+        ret =  {}
+        try:
+            with open("/proc/mounts",'rb') as mounts:
+                for line in mounts.readlines():
+                   fs_spec, fs_file, fs_vfstype, fs_mntops, fs_freq, fs_passno = line.split(' ')
+                   ret[fs_file] = fs_vfstype
+        except:
+            error (_("Can't read mounts table"))
+        return ret
+
+    def __appendToList(self, path, dest_path, options):
+        """Add a file to the copy list
+        @param path: absolute path of file
+        @param options: options as return by optparse"""
+        debug (_("Adding to copy list: %(path)s ==> %(dest_path)s (%(fs_type)s)") % {"path":path.decode('utf-8','replace'),
+                                                                                  "dest_path":dest_path.decode('utf-8','replace'),
+                                                                                   "fs_type":self.getFsType(dest_path)}              )
+        try:
+            self.bytes_total+=os.path.getsize(path)
+            self.copy_list.insert(0,(path, dest_path, options))
+        except OSError,e:
+            error(_("Can't copy %(path)s: %(exception)s") % {'path':path.decode('utf-8','replace'), 'exception':e.strerror})
+
+
+    def __appendDirToList(self, dirpath, dest_path, options):
+        """Add recursively directory to the copy list
+        @param path: absolute path of dir
+        @param options: options as return by optparse"""
+        #We first check that the dest path exists, and create it if needed
+        dest_path = self.__filename_fix(dest_path, options, no_journal=True)
+        if not os.path.exists(dest_path):
+            debug ("Creating directory %s" % dest_path)
+            os.makedirs(dest_path) #TODO: check permissions
+        #TODO: check that dest_path is an accessible dir,
+        #      and skip file/write error in log if needed
+        try:
+            for filename in os.listdir(dirpath):
+                filepath = os.path.join(dirpath,filename)
+                if os.path.islink(filepath) and not options.dereference:
+                    debug ("Skippink symbolic dir: %s" % filepath.decode('utf-8','replace'))
+                    continue
+                if os.path.isdir(filepath):
+                    full_dest_path = os.path.join(dest_path,filename)
+                    self.__appendDirToList(filepath, full_dest_path, options)
+                else:
+                    self.__appendToList(filepath, dest_path, options)
+        except OSError,e:
+            try:
+                error(_("Can't append %(path)s to copy list: %(exception)s") % {'path':filepath.decode('utf-8','replace'),
+                                                             'exception':e.strerror})
+            except NameError:
+                #We can't list the dir
+                error(_("Can't access %(dirpath)s: %(exception)s") % {'dirpath':dirpath.decode('utf-8','replace'),
+                                                             'exception':e.strerror})
+
+    def __checkArgs(self, options, source_dir, args):
+        """Check thats args are files, and add them to copy list
+        @param options: options sets
+        @param source_dir: directory where the command was entered
+        @parm args: args of the copy"""
+        assert(len (args)>=2)
+        len_args = len(args)
+        try:
+            dest_path = os.path.normpath(os.path.join(source_dir, args.pop()))
+        except OSError,e:
+            error (_("Invalid dest_path: %s"),e)
+        
+        for path in args:
+            abspath = os.path.normpath(os.path.join(os.path.expanduser(source_dir), path))
+            if not os.path.exists(abspath):
+                warning(_("The path given in arg doesn't exist or is not accessible: %s") % abspath.decode('utf-8','replace'))
+            else:
+                if os.path.isdir(abspath):
+                    if not options.recursive:
+                        warning (_('omitting directory "%s"') % abspath.decode('utf-8','replace'))
+                    else:
+                        _basename=os.path.basename(os.path.normpath(path))
+                        full_dest_path = dest_path if options.directdir else os.path.normpath(os.path.join(dest_path, _basename))
+                        self.__appendDirToList(abspath, full_dest_path, options)
+                else:
+                    self.__appendToList(abspath, dest_path, options)
+
+    def __copyNextFile(self):
+        """Take the last file in the list, and launch the copy using glib io_watch event
+           @return: True a file was added, False else""" 
+        if self.copy_list:
+            source_file, dest_path, options = self.copy_list.pop()
+            self.journal.startFile(source_file)
+            try:
+                source_fd = open(source_file, 'rb')
+            except:
+                self.journal.copyFailed()
+                self.journal.error("can't open source")
+                self.journal.closeFile()
+                return True
+            filename = os.path.basename(source_file)
+            assert(filename)
+            dest_file = self.__filename_fix(options.dest_file,options) if options.dest_file else self.__filename_fix(os.path.join(dest_path,filename),options)
+            if os.path.exists(dest_file) and not options.force:
+                warning (_("File [%s] already exists, skipping it !") % dest_file.decode('utf-8','replace'))
+                self.journal.copyFailed()
+                self.journal.error("already exists")
+                self.journal.closeFile()
+                source_fd.close()
+                return True
+            try:
+                dest_fd = open(dest_file, 'wb')
+            except:
+                self.journal.copyFailed()
+                self.journal.error("can't open dest")
+                self.journal.closeFile()
+                source_fd.close()
+                return True
+                
+            gobject.io_add_watch(source_fd,gobject.IO_IN,self._copyFile,
+                                 (dest_fd, options), priority=gobject.PRIORITY_DEFAULT)
+            if not self.progress:
+                info(_("COPYING %(source)s ==> %(dest)s") % {"source":source_file.decode('utf-8','replace'),
+                                                             "dest":dest_file.decode('utf-8','replace')})
+            return True
+        else:
+            #Nothing left to copy, we quit
+            if self.progress:
+                self.__pbar_finish()
+            self.journal.showErrors()
+            self.loop.quit()
+
+    def __copyFailed(self, reason, source_fd, dest_fd):
+        """Write the failure in the journal and close files descriptors"""
+        self.journal.copyFailed()
+        self.journal.error(reason)
+        self.journal.closeFile()
+        source_fd.close()
+        dest_fd.close()
+        
+
+
+    def _copyFile(self, source_fd, condition, data):
+        """Actually copy the file, callback used with io_add_watch
+        @param source_fd: file descriptor of the file to copy
+        @param condition: condition which launched the callback (glib.IO_IN)
+        @param data: tuple with (destination file descriptor, copying options)"""
+        try:
+            dest_fd,options = data
+
+            try:
+                buff = source_fd.read(self.buffer_size)
+            except KeyboardInterrupt:
+                raise KeyboardInterrupt
+            except:
+                self.__copyFailed("can't read source", source_fd, dest_fd)
+                return False
+
+            try:
+                dest_fd.write(buff)
+            except KeyboardInterrupt:
+                raise KeyboardInterrupt
+            except:
+                self.__copyFailed("can't write to dest", source_fd, dest_fd)
+                return False
+
+            self.bytes_copied += len(buff)
+            if self.progress:
+                self._pbar_update()
+
+            if len(buff) != self.buffer_size:
+                source_fd.close()
+                dest_fd.close()
+                self.__post_copy(source_fd.name, dest_fd.name, options)
+                self.journal.closeFile()
+                return False
+            return True
+        except KeyboardInterrupt:
+            self._userInterruption()
+
+    def __filename_fix(self, filename, options, no_journal=False):
+        """Fix filenames incompatibilities/mistake according to options
+        @param filename: full path to the file
+        @param options: options as parsed on command line
+        @param no_journal: don't write any entry in journal
+        @return: fixed filename"""
+        fixed_filename = filename
+
+        if self.getFsType(filename) == 'vfat' and options.fs_fix:
+            fixed_filename = filename.replace('\\','_')\
+                               .replace(':',';')\
+                               .replace('*','+')\
+                               .replace('?','_')\
+                               .replace('"','\'')\
+                               .replace('<','[')\
+                               .replace('>',']')\
+                               .replace('|','!')\
+                               .rstrip() #XXX: suffixed spaces cause issues (must check FAT doc for why)
+
+        if not fixed_filename:
+            fixed_filename = '_'
+        if fixed_filename != filename and not no_journal:
+            self.journal.error('filename fixed')
+        return fixed_filename
+
+    def __post_copy(self, source_file, dest_file, options):
+        """Do post copy traitement (mainly managing --preserve option)"""
+        st_file = os.stat(source_file)
+        for preserve in options.preserve:
+            try:
+                if preserve == 'mode':
+                    os.chmod(dest_file, st_file.st_mode)
+                elif preserve == 'ownership':
+                    os.chown(dest_file, st_file.st_uid, st_file.st_gid)
+                elif preserve == 'timestamps':
+                    os.utime(dest_file, (st_file.st_atime, st_file.st_mtime))
+            except OSError,e:
+                self.journal.error("preserve-"+preserve)
+
+    def __get_string_size(self, size):
+        """Return a nice string representation of a size"""
+
+        if size>=2**50:
+            return _("%.2f PiB") % (float(size)/2**50)
+        elif size>=2**40:
+            return _("%.2f TiB") % (float(size)/2**40)
+        elif size>=2**30:
+            return _("%.2f GiB") % (float(size)/2**30)
+        elif size>=2**20:
+            return _("%.2f MiB") % (float(size)/2**20)
+        elif size>=2**10:
+            return _("%.2f KiB") % (float(size)/2**10)
+        else:
+            return _("%i B") % size
+
+    def _pbar_update(self):
+        """Update progress bar position, create the bar if it doesn't exist"""
+        assert(self.progress)
+        try:
+            if self.pbar.maxval != self.bytes_total:
+                self.pbar.maxval = self.bytes_total
+                self.pbar.widgets[0] = _("Copying %s") % self.__get_string_size(self.bytes_total)
+        except AttributeError:
+            if not self.bytes_total:
+                #No progress bar if the files have a null size
+                return
+            self.pbar = ProgressBar(self.bytes_total,[_("Copying %s") % self.__get_string_size(self.bytes_total)," ",Percentage()," ",Bar()," ",FileTransferSpeed()," ",ETA()])
+            self.pbar.start()
+        self.pbar.update(self.bytes_copied)
+
+    def __pbar_finish(self):
+        """Mark the progression as finished"""
+        assert(self.progress)
+        try:
+            self.pbar.finish()
+        except AttributeError:
+            pass
+
+    def __sourcesSaving(self,options,args):
+        """Manage saving/loading/deleting etc of sources files
+        @param options: options as parsed from command line
+        @param args: args parsed from command line"""
+        if options.sources_save or options.sources_load\
+           or options.sources_list or options.sources_full_list\
+           or options.sources_del or options.sources_replace:
+            try:
+                with open(os.path.expanduser(const_SAVED_LIST),'r') as saved_fd:
+                    saved_files = pickle.load(saved_fd)
+            except:
+                saved_files={}
+
+        if options.sources_del:
+            if not saved_files.has_key(options.sources_del):
+                error(_("No saved sources with this name, check existing names with --sources-list"))
+            else:
+                del saved_files[options.sources_del]
+                with open(os.path.expanduser(const_SAVED_LIST),'w') as saved_fd:
+                    pickle.dump(saved_files,saved_fd)
+            if not args:
+                exit(0)
+
+
+        if options.sources_list or options.sources_full_list:
+            info(_('Saved sources:'))
+            sources = saved_files.keys()
+            sources.sort()
+            for source in sources:
+                info("\t[%s]" % source)
+                if options.sources_full_list:
+                    for filename in saved_files[source]:
+                        info("\t\t%s" % filename)
+            info("---\n")
+            if not args:
+                exit(0)
+
+        if options.sources_save or options.sources_replace:
+            if saved_files.has_key(options.sources_save) and not options.sources_replace:
+                error(_("There is already a saved sources with this name, skipping --sources-save")) 
+            else:
+                if len(args)>1:
+                    saved_files[options.sources_save] = map(os.path.abspath,args[:-1])
+                    with open(os.path.expanduser(const_SAVED_LIST),'w') as saved_fd:
+                        pickle.dump(saved_files,saved_fd)
+
+        if options.sources_load:
+            if not saved_files.has_key(options.sources_load):
+                error(_("No saved sources with this name, check existing names with --sources-list"))
+            else:
+                saved_args = saved_files[options.sources_load]
+                saved_args.reverse()
+                for arg in saved_args:
+                    args.insert(0,arg)
+
+    def parseArguments(self, full_args=sys.argv[1:], source_dir = os.getcwd()):
+        """Parse arguments and add files to queue
+        @param full_args: list of arguments strings (without program name)
+        @param source_dir: path from where the arguments come, as given by os.getcwd()
+        @return: a tuple (boolean, message) where the boolean is the success of the arguments
+                 validation, and message is the error message to print when necessary"""
+        _usage="""
+        %prog [options] FILE DEST
+        %prog [options] FILE1 [FILE2 ...] DEST-DIR
+
+        %prog --help for options list
+        """
+        for idx in range(len(full_args)):
+            if isinstance(full_args[idx], unicode):
+                #We don't want unicode as some filenames can be invalid unicode
+                full_args[idx] = full_args[idx].encode('utf-8')
+        
+        parser = OptionParser(usage=_usage,version=ABOUT)
+
+        parser.add_option("-r", "--recursive", action="store_true", default=False,
+                    help=_("copy directories recursively"))
+        
+        parser.add_option("-f", "--force", action="store_true", default=False,
+                    help=_("force overwriting of existing files"))
+
+        parser.add_option("--preserve", action="store", default='mode,ownership,timestamps',
+                    help=_("preserve  the  specified  attributes"))
+        
+        parser.add_option("-L", "--dereference", action="store_true", default=False,
+                    help=_("always follow symbolic links in sources"))
+        
+        parser.add_option("-P", "--no-dereference", action="store_false", dest='dereference',
+                    help=_("never follow symbolic links in sources"))
+        
+        #parser.add_option("--no-unicode-fix", action="store_false", dest='unicode_fix', default=True,
+        #            help=_("don't fix name encoding errors")) #TODO
+
+        parser.add_option("--no-fs-fix", action="store_false", dest='fs_fix', default=True,
+                    help=_("don't fix filesystem name incompatibily"))
+
+        parser.add_option("--no-progress", action="store_false", dest="progress", default=True,
+                    help=_("deactivate progress bar"))
+        
+        parser.add_option("-v", "--verbose", action="store_true", default=False,
+                    help=_("Show what is currently done"))
+
+        group_saving = OptionGroup(parser, "sources saving")
+        
+        group_saving.add_option("--sources-save", action="store",
+                    help=_("Save source arguments"))
+
+        group_saving.add_option("--sources-replace", action="store",
+                    help=_("Save source arguments and replace memory if it already exists"))
+
+        group_saving.add_option("--sources-load", action="store",
+                    help=_("Load source arguments"))
+        
+        group_saving.add_option("--sources-del", action="store",
+                    help=_("delete saved sources"))
+        
+        group_saving.add_option("--sources-list", action="store_true", default=False,
+                    help=_("List names of saved sources"))
+        
+        group_saving.add_option("--sources-full-list", action="store_true", default=False,
+                    help=_("List names of saved sources and files in it"))
+
+        parser.add_option_group(group_saving)
+
+        
+        (options, args) = parser.parse_args(full_args)
+        options.directdir = False #True only in the special case: we are copying a dir and it doesn't exists
+        #options check
+        if options.progress and not pbar_available:
+            warning (_("Progress bar is not available, deactivating"))
+            options.progress = self.progress = False
+        else:
+            self.progress = options.progress
+
+        if options.verbose:
+            logging.getLogger().setLevel(logging.DEBUG)
+
+        preserve = set(options.preserve.split(','))
+        if not preserve.issubset(const_PRESERVE):
+            error (_("Invalide --preserve value\nvalid values are:"))
+            for value in const_PRESERVE:
+                error('- %s' % value)
+            exit(1)
+        else:
+            options.preserve = preserve
+
+        self.__sourcesSaving(options, args)
+
+        if len(args) == 2: #we check special cases
+            src_path = os.path.abspath(os.path.expanduser(args[0]))
+            dest_path = os.path.abspath(os.path.expanduser(args[1]))
+            if os.path.isdir(src_path):
+                options.dest_file = None #we are copying a dir, this options is for files only
+                if not os.path.exists(dest_path):
+                    options.directdir = True #dest_dir doesn't exist, it's the directdir special case
+            elif not os.path.exists(dest_path) or os.path.isfile(dest_path):
+                options.dest_file = dest_path
+                args[1] = os.path.dirname(dest_path)
+            else:
+                options.dest_file = None
+        else:
+            options.dest_file = None
+        
+        #if there is an other instance of gcp, we send options to it
+        if not self._main_instance:
+            info (_("There is already one instance of %s running, pluging to it") % NAME_SHORT)
+            #XXX: we have to serialize data as dbus only accept valid unicode, and filenames
+            #     can have invalid unicode.
+            return self.gcp_main.addArgs(pickle.dumps(os.getcwd()),pickle.dumps(full_args))
+        else:
+            if len(args) < 2:
+                _error_msg = _("Wrong number of arguments")
+                return (False, _error_msg)
+            debug(_("adding args to gcp: %s") % str(args).decode('utf-8','replace'))
+            self.__checkArgs(options, source_dir, args)
+            if not self.__launched:
+                self.journal = Journal()
+                gobject.idle_add(self.__copyNextFile)
+                self.__launched = True
+        return (True,'')
+
+    def _userInterruption(self):
+        info(_("User interruption: good bye"))
+        exit(1)
+
+    def go(self):
+        """Launch main loop"""
+        self.loop = gobject.MainLoop()
+        try:
+            self.loop.run()
+        except KeyboardInterrupt:
+            self._userInterruption()
+
+
+if __name__ == "__main__":
+    gcp = GCP()
+    success,message = gcp.parseArguments()
+    if not success:
+        error(message)
+        exit(1)
+    if gcp._main_instance:
+        gcp.go()
+        if gcp.journal.failed:
+            exit(1)
+        if gcp.journal.partial:
+            exit(2)
+

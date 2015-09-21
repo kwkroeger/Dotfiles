@@ -28,6 +28,10 @@ else
   cp -f pt/linux-pt $HOME/.pt
 fi
 
+cp -rf gcp .gcp
+cp -rf .gcp $HOME
+rm -rf .gcp
+
 cp -rf lesspipe .lesspipe
 cp -rf .lesspipe $HOME
 rm -rf .lesspipe
