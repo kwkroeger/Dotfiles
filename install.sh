@@ -17,7 +17,8 @@ cp -f htoprc $HOME/.htoprc
 cp -f osx $HOME/.osx
 cp -f zshrc $HOME/.zshrc
 
-cp -f --parents config.cson $HOME/.atom/
+mkdir $HOME/.atom
+cp -f config.cson $HOME/.atom/
 
 SYSTEM=`uname -a`
 if [[ $SYSTEM =~ .*Darwin.* ]]; then
