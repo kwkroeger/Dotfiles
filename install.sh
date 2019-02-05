@@ -13,7 +13,8 @@ cp -f colordiffrc $HOME/.colordiffrc
 cp -f gitconfig $HOME/.gitconfig
 cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop
-cp -f htoprc $HOME/.htoprc
+mkdir -p $HOME/.config/htop; cp -f htoprc $HOME/.config/htop/.htoprc
+rm -f $HOME/.htoprc
 cp -f osx $HOME/.osx
 cp -f toprc $HOME/.toprc
 cp -f zshrc $HOME/.zshrc

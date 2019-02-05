@@ -166,6 +166,9 @@ nnoremap <silent> w :w!<CR>
 nnoremap <silent> <F2> :set paste<CR>
 nnoremap <silent> <F3> :set nopaste<CR> 
 
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+
 " Toggle Tagbar
 nnoremap <silent> <F9> :TagbarToggle<CR> 
 

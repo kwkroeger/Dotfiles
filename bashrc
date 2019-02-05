@@ -138,10 +138,12 @@ unset color_cursor
   #Make Things Look Nice
   alias df='df -h'
   alias du='du -ch'
+  alias ducks='du -cks * | sort -rn| head -11'
   alias diff="$HOME/.colordiff"
   alias gcp="$HOME/.gcp/gcp"
   alias grep='grep --color=auto'
   alias ls='ls -hF --color=auto'
+  alias lsl='ls -halF --color=auto'
   alias mkdir='mkdir -pv'
  
   # Enable aliases to be sudo’ed
@@ -222,6 +224,7 @@ unset color_cursor
   ## LESS ##
   export LESSOPEN='|$HOME/.lesspipe/lesspipe.sh %s'
   export LESS='-R'
+  export PAGER='less'
 
   ## HISTORY ##
   export HISTCONTROL='ignoredups:ignoreboth'
@@ -244,8 +247,5 @@ unset color_cursor
   shopt -s cdspell
   shopt -s checkwinsize
   shopt -s nocaseglob
-
-## Personal Addons
-alias update='brew update; brew upgrade; brew cleanup; sudo gem update'
 
 cd $HOME
