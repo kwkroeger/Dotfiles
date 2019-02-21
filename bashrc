@@ -161,14 +161,7 @@ unset color_cursor
   #Programs and Script's I can't live without
   alias ack="$HOME/.pt"
   alias htop="$HOME/.htop"
-  alias pt="$HOME/.pt"
   alias smem="$HOME/.smem"
-
-  #Easier Back Navigation
-  alias .='cd ../'
-  alias ..='cd ../../'
-  alias ...='cd ../../../'
-  alias ....='cd ../../../../'
 
   #Only use X11 Forwarding Explicitly
 
@@ -247,5 +240,13 @@ unset color_cursor
   shopt -s cdspell
   shopt -s checkwinsize
   shopt -s nocaseglob
+
+### FINAL ###
+
+  #Easier Back Navigation
+  alias .='cd ../'
+  alias ..='cd ../../'
+  alias ...='cd ../../../'
+  alias ....='cd ../../../../'
 
 cd $HOME
