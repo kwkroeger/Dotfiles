@@ -222,7 +222,7 @@ unset color_cursor
   unset MAILCHECK
 
   ## TERMINAL ##
-  export IGNOREEOF="2"
+  export IGNOREEOF="1"
   export TERM=xterm-256color
   
   force_color_prompt=yes
