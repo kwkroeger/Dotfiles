@@ -20,7 +20,7 @@ cp -f osx $HOME/.osx
 cp -f toprc $HOME/.toprc
 cp -f zshrc $HOME/.zshrc
 
-mkdir $HOME/.atom
+mkdir -p $HOME/.atom
 cp -f config.cson $HOME/.atom/
 
 SYSTEM=`uname -a`
