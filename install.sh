@@ -10,6 +10,7 @@ cp -f bash_profile $HOME/.bash_profile
 cp -f bashrc $HOME/.bashrc
 cp -f colordiff $HOME/.colordiff
 cp -f colordiffrc $HOME/.colordiffrc
+cp -f e $HOME/.e
 cp -f gitconfig $HOME/.gitconfig
 cp -f gitignore $HOME/.gitignore
 cp -f htop $HOME/.htop

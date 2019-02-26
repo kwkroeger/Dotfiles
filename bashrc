@@ -138,13 +138,14 @@ unset color_cursor
   #Make Things Look Nice
   alias df='df -h'
   alias du='du -ch'
-  alias ducks='du -cks * | sort -rn| head -11'
+  alias dus='for each in $(find . -maxdepth 1 -type d) ; do du -hs "$each" | head -n1; done | sort -rh'
   alias diff="$HOME/.colordiff"
   alias gcp="$HOME/.gcp/gcp"
   alias grep='grep --color=auto'
   alias ls='ls -hF --color=auto'
   alias lsl='ls -halF --color=auto'
   alias mkdir='mkdir -pv'
+  alias psg='ps auwx | grep'
  
   # Enable aliases to be sudo’ed
   alias sudo='sudo '
@@ -160,6 +161,7 @@ unset color_cursor
 
   #Programs and Script's I can't live without
   alias ack="$HOME/.pt"
+  alias e="$HOME/.e"
   alias htop="$HOME/.htop"
   alias smem="$HOME/.smem"
 
@@ -182,29 +184,15 @@ unset color_cursor
   fi
 
 ### FUNCTIONS ###
-  
-  e () {
-    if [ -f $1 ] ; then
-      case $1 in
-        *.tar.bz2) tar xvjf $1 && cd $(basename "$1" .tar.bz2) ;;
-        *.tar.gz)  tar xvzf $1 && cd $(basename "$1" .tar.gz) ;;
-        *.tar.xz)  tar Jxvf $1 && cd $(basename "$1" .tar.xz) ;;
-        *.bz2)     bunzip2 $1 && cd $(basename "$1" /bz2) ;;
-        *.rar)     unrar x $1 && cd $(basename "$1" .rar) ;;
-        *.gz)      gunzip $1 && cd $(basename "$1" .gz) ;;
-        *.tar)     tar xvf $1 && cd $(basename "$1" .tar) ;;
-        *.tbz2)    tar xvjf $1 && cd $(basename "$1" .tbz2) ;;
-        *.tgz)     tar xvzf $1 && cd $(basename "$1" .tgz) ;;
-        *.zip)     unzip $1 && cd $(basename "$1" .zip) ;;
-        *.Z)       uncompress $1 && cd $(basename "$1" .Z) ;;
-        *.7z)      7z x $1 && cd $(basename "$1" .7z) ;;
-        *)         echo "don't know how to extract '$1'..." ;;
-      esac
-   else
-       echo "'$1' is not a valid file!"
-   fi
+
+  s() {
+    if [[ $# == 0 ]]; then
+        sudo $(history -p '!!')
+    else
+        sudo "$@"
+    fi
   }
-  
+
 ### VARIABLES ###
 
   export BLOCKSIZE=M
@@ -234,16 +222,20 @@ unset color_cursor
   unset MAILCHECK
 
   ## TERMINAL ##
+  export IGNOREEOF="2"
   export TERM=xterm-256color
   
   force_color_prompt=yes
   shopt -s cdspell
   shopt -s checkwinsize
+  shopt -s extglob
+  shopt -s dotglob
+  shopt -s nullglob
   shopt -s nocaseglob
 
-### FINAL ###
+  stty stop ''; stty start '';
+  stty -ixon -ixoff
 
-  #Easier Back Navigation
   alias .='cd ../'
   alias ..='cd ../../'
   alias ...='cd ../../../'
