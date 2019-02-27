@@ -4,9 +4,6 @@
 [submodule "vim/bundle/mustache-syntax"]
 	path = vim/bundle/mustache-syntax
 	url = https://github.com/mustache/vim-mustache-handlebars.git
-[submodule "vim/bundle/rust-syntax"]
-	path = vim/bundle/rust-syntax
-	url = https://github.com/rust-lang/rust.vim.git
 [submodule "vim/bundle/go-syntax"]
 	path = vim/bundle/go-syntax
 	url = https://github.com/fatih/vim-go.git
