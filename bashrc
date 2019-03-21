@@ -182,16 +182,6 @@ unset color_cursor
     fi
   fi
 
-### FUNCTIONS ###
-
-  s() {
-    if [[ $# == 0 ]]; then
-        sudo $(history -p '!!')
-    else
-        sudo "$@"
-    fi
-  }
-
 ### VARIABLES ###
 
   export BLOCKSIZE=M
