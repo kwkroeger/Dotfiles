@@ -12,7 +12,7 @@
 # Fail out if an error is seen
 set -e
 
-install_antibody {
+install_antibody() {
   DOWNLOAD_URL="https://github.com/getantibody/antibody/releases/download"
   test -z "$TMPDIR" && TMPDIR="$(mktemp -d)"
 
@@ -40,8 +40,7 @@ install_antibody {
 
   download
   extract || true
-  sudo mv -f "$TMPDIR"/antibody $HOME/.antibody
-  which antibody
+  mv -f "$TMPDIR"/antibody $HOME/.antibody
 }
 
 #---  FUNCTION  -----------------------------------------------------------------------------------
