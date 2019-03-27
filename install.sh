@@ -14,11 +14,11 @@
 #   DESCRIPTION: Install each directory into $HOME
 #--------------------------------------------------------------------------------------------------
 install_dirs() {
-  items=("$@")
-  for item in "${items[@]}"; do
-    cp -rf $item .$item
-    cp -rf .$item $HOME
-    rm -rf .$item
+  directories=($(ls -p | grep /))
+  for dir in "${directories[@]}"; do
+    cp -rf $dir .$dir
+    cp -rf .$dir $HOME
+    rm -rf .$dir
   done
 }
 
@@ -27,50 +27,22 @@ install_dirs() {
 #   DESCRIPTION: Install each file into $HOME
 #--------------------------------------------------------------------------------------------------
 install_files() {
-  items=("$@")
-  for item in "${items[@]}"; do
-    cp -f $item $HOME/.$item
+  files=($(ls -p | grep -v /))
+  for file in "${files[@]}"; do
+    if [[ $file == "install.sh" ]]; then
+      continue
+    elif [[ $file == "readme.md" ]]; then                                                            
+      continue                                                                                      
+    else 
+      cp -f $file $HOME/.$file
+    fi
   done
 }
 
 echo "Installing to $HOME"
 
-declare -a configs=(
-'aliases'
-'bash_profile'
-'bashrc'
-'colordiff'
-'colordiffrc'
-'gitconfig'
-'gitignore'
-'osx'
-'profile'
-'spaceship'
-'toprc'
-'variables'
-'vimrc'
-'wgetrc'
-'zshrc'
-)
-
-declare -a applications=(
-'e'
-'htop'
-'smem'
-)
-
-declare -a directories=(
-'atom'
-'config'
-'fonts'
-'lesspipe'
-'vim'
-)
-
-install_files "${applications[@]}"
-install_files "${configs[@]}"
-
-install_dirs "${directories[@]}"
+install_files
+install_dirs
 
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
