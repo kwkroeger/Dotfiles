@@ -9,7 +9,6 @@ alias du='du -ch'
 alias dus='for each in $(find . -maxdepth 1 -type d) ; do du -hs "$each" | head -n1; done | sort -rh'
 alias dmesg='dmesg --color=auto'
 alias diff="$HOME/.colordiff"
-alias gcp="$HOME/.gcp/gcp"
 alias grep='grep --color=auto'
 alias ls='ls -hF --color=auto'
 alias mkdir='mkdir -pv'
@@ -26,7 +25,7 @@ alias sl='ls'
 alias gti='git'
 
 alias ack="ripgrep"
-alias e = "$HOME/.e"
+alias e="$HOME/.e"
 alias htop="$HOME/.htop"
 alias smem="$HOME/.smem"
 
