@@ -31,6 +31,10 @@ setopt share_history # Share history between different instances
 . "$HOME/.variables"
 
 ## ANTIBODY ##
+if [ -f $HOME/.antibody ]; then
+  alias antibody="$HOME/.antibody"
+fi
+
 source <(antibody init)
 
 antibody bundle zdharma/fast-syntax-highlighting
