@@ -1,0 +1,18 @@
+#!/bin/sh
+
+export BLOCKSIZE=M
+
+## EDITOR ##
+export EDITOR='vim'
+export SVN_EDITOR='vim'
+export VISUAL='vim'
+
+## LESS ##
+export LESSOPEN='|$HOME/.lesspipe/lesspipe.sh %s'
+export LESS='-R'
+
+## MAIL ##
+unset MAILCHECK
+
+## TERMINAL ##
+export TERM=xterm-256color
