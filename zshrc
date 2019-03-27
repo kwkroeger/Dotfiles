@@ -81,7 +81,7 @@ BASE16_THEME="seti"
 . "$HOME/.aliases"
 
 ## EXTRAS ##
-. "$HOME/.extras"
+source "$HOME/.extras"
 
 ## BINDINGS ##
 bindkey -v

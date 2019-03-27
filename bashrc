@@ -27,7 +27,7 @@ fi
 . "$HOME/.aliases"
 
 ## EXTRAS ##
-. "$HOME/.extras"
+source "$HOME/.extras"
 
 ## HISTORY ##
 export HISTCONTROL='ignoredups:ignoreboth'
