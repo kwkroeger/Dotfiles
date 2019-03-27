@@ -10,13 +10,26 @@
 #==================================================================================================
 
 #---  FUNCTION  -----------------------------------------------------------------------------------
-#          NAME:  install_each_in
-#   DESCRIPTION:  For each item install it into $HOME
+#          NAME:  install_dirs
+#   DESCRIPTION: Install each directory into $HOME
 #--------------------------------------------------------------------------------------------------
-install_each_in() {
+install_dirs() {
   items=("$@")
   for item in "${items[@]}"; do
-    cp $item $HOME/.$item
+    cp -rf $item .$item
+    cp -rf .$item $HOME
+    rm -rf .$item
+  done
+}
+
+#---  FUNCTION  -----------------------------------------------------------------------------------
+#          NAME:  install_files
+#   DESCRIPTION: Install each file into $HOME
+#--------------------------------------------------------------------------------------------------
+install_files() {
+  items=("$@")
+  for item in "${items[@]}"; do
+    cp -f $item $HOME/.$item
   done
 }
 
@@ -46,28 +59,20 @@ declare -a applications=(
 'smem'
 )
 
-install_each_in "${applications[@]}"
-install_each_in "${configs[@]}"
+declare -a directories=(
+'atom'
+'config'
+'fonts'
+'lesspipe'
+'vim'
+)
 
-mkdir -p $HOME/.config/htop; cp -f htoprc $HOME/.config/htop/.htoprc
-rm -f $HOME/.htoprc
+install_files "${applications[@]}"
+install_files "${configs[@]}"
+
+install_dirs "${directories[@]}"
 
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
-
-cp -rf fonts .fonts
-cp -rf .fonts $HOME
-rm -rf .fonts
-
-mkdir -p $HOME/.atom
-cp -f config.cson $HOME/.atom/
-
-cp -rf lesspipe .lesspipe
-cp -rf .lesspipe $HOME
-rm -rf .lesspipe
-
-cp -rf vim .vim
-cp -rf .vim $HOME
-rm -rf .vim
 
 vim +PlugInstall +qa
 

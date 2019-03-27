@@ -55,8 +55,8 @@ ohmy=(
  'screen'
  'sudo'
  'urltools'
-
 )
+
 for package in $ohmy; do
   antibody bundle robbyrussell/oh-my-zsh path:plugins/$package
 done
