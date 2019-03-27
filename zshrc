@@ -80,6 +80,9 @@ BASE16_THEME="seti"
 ## ALIASES ##
 . "$HOME/.aliases"
 
+## EXTRAS ##
+. "$HOME/.extras"
+
 ## BINDINGS ##
 bindkey -v
 bindkey '^r' history-incremental-search-backward # Ctrl+R

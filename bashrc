@@ -26,6 +26,9 @@ fi
 ## ALIASES ##
 . "$HOME/.aliases"
 
+## EXTRAS ##
+. "$HOME/.extras"
+
 ## HISTORY ##
 export HISTCONTROL='ignoredups:ignoreboth'
 export HISTSIZE=16384

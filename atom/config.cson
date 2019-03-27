@@ -7,9 +7,6 @@
       "base16-tomorrow-dark-theme"
     ]
     audioBeep: false
-    disabledPackages: [
-      "language-python"
-    ]
   editor:
     lineHeight: 1.25
     invisibles: {}

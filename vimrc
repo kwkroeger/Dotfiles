@@ -16,7 +16,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
@@ -108,7 +108,12 @@ nnoremap <silent> w :w!<CR>
 
 " Paste is useful when pasting from non-vim sources
 nnoremap <silent> <F2> :set paste<CR>
-nnoremap <silent> <F3> :set nopaste<CR> 
+nnoremap <silent> <F3> :set nopaste<CR>
+" Remove all trailing whitespace by pressing F4
+nnoremap <silent> <F4> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+" Update Plugins
+nnoremap <silent> <F5> :PlugUpdate<CR>
+
 
 " Easy Window Switching
 nmap <silent> <C-m> :wincmd l<CR>

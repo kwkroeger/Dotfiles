@@ -80,8 +80,18 @@ install_dirs
 
 install_antibody
 
+rm -rf ~/.config/base16-shell 
 git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
 vim +PlugInstall +qa
+
+if [[ ! -f $HOME/.extras ]]; then
+  echo "
+#/bin/sh
+#
+# This file to remain blank, used for site specific extensions
+#
+  " > $HOME/.extras
+fi
 
 echo "Installation to $HOME complete!"
