@@ -8,8 +8,16 @@ export SVN_EDITOR='vim'
 export VISUAL='vim'
 
 ## LESS ##
-export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-export LESS=' -R -N'
+
+if type lesspipe.sh >/dev/null 2>&1; then
+  export LESSOPEN='|lesspipe.sh %s'
+fi
+
+if type pygmentize >/dev/null 2>&1; then
+  export LESSCOLORIZER='pygmentize'
+fi
+#export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
+#export LESS=' -R -N'
 
 ## MAIL ##
 unset MAILCHECK

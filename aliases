@@ -10,8 +10,12 @@ alias dus='for each in $(find . -maxdepth 1 -type d) ; do du -hs "$each" | head 
 alias dmesg='dmesg --color=auto'
 alias diff="colordiff"
 alias grep='grep --color=auto'
-alias ls='ls -hF --color=auto'
-alias lsl='ls -halF --color=auto'
+
+if ls --color -d . >/dev/null 2>&1; then  # GNU ls
+  alias ls='ls -F -h --color=always -v --author --time-style=long-iso'
+  alias l='ls -l -a'
+fi
+
 alias mkdir='mkdir -pv'
 alias psg='ps auwx | grep'
 
