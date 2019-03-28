@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+## ALIASES ##
+source "$HOME/.aliases"
+  
+## EXTRAS ##
+source "$HOME/.extras"
+  
+## TOOLS ##
+export PATH=$HOME/.bin:$PATH
+
+## VARIABLES ##
+source "$HOME/.variables"

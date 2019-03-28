@@ -27,9 +27,6 @@ setopt inc_append_history # Save history entries as soon as they are entered
 setopt interactive_comments # Allow comments in interactive shells
 setopt share_history # Share history between different instances
 
-## VARIABLES
-. "$HOME/.variables"
-
 ## ANTIBODY ##
 if [ -f $HOME/.antibody ]; then
   alias antibody="$HOME/.antibody"
@@ -77,11 +74,8 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 BASE16_THEME="seti"
 
-## ALIASES ##
-. "$HOME/.aliases"
-
-## EXTRAS ##
-source "$HOME/.extras"
+## SHARED ##
+source "$HOME/.shared"
 
 ## BINDINGS ##
 bindkey -v

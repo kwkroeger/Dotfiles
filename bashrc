@@ -23,12 +23,6 @@ if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
   done
 fi
 
-## ALIASES ##
-. "$HOME/.aliases"
-
-## EXTRAS ##
-source "$HOME/.extras"
-
 ## HISTORY ##
 export HISTCONTROL='ignoredups:ignoreboth'
 export HISTSIZE=16384
@@ -57,7 +51,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 BASE16_THEME="seti"
 
-## VARIABLES ##
-. "$HOME/.variables"
+## SHARED ##
+source "$HOME/.shared"
 
 cd $HOME
