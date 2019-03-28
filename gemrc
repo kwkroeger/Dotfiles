@@ -1,1 +1,14 @@
-gem: --no-document
+# http://guides.rubygems.org/command-reference/#gem-environment
+---
+gem: --no-ri --no-rdoc
+:benchmark: false
+:verbose: true
+:update_sources: true
+:sources:
+- http://gems.rubyforge.org/
+- http://rubygems.org/
+:backtrace: false
+:bulk_threshold: 1000
+
+# HTTP Proxy options
+# http-proxy: http://example.com:80
