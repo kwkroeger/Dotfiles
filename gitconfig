@@ -54,5 +54,9 @@
 [merge]
   log = true
 
+[user]
+  name = kwkroeger
+  email = 3936667+kwkroeger@users.noreply.github.com 
+
 [push]
   default = matching
