@@ -28,9 +28,13 @@ setopt interactive_comments # Allow comments in interactive shells
 setopt share_history # Share history between different instances
 
 ## ANTIBODY ##
-if [ -f $HOME/.antibody ]; then
-  alias antibody="$HOME/.antibody"
-fi
+antibody () {
+	case "$1" in
+		(bundle) source <( $HOME/.bin/antibody $@ ) || $HOME/.bin/antibody $@ ;;
+		(*) $HOME/.bin/antibody $@ ;;
+	esac
+}
+
 
 source <(antibody init)
 
