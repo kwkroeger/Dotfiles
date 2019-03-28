@@ -25,7 +25,7 @@ alias wget='wget -c'
 alias sl='ls'
 alias gti='git'
 
-alias ack="ripgrep"
+alias ack="rg"
 alias e="$HOME/.e"
 alias htop="$HOME/.htop"
 alias smem="$HOME/.smem"
