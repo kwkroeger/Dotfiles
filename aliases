@@ -8,7 +8,7 @@ alias df='df -h'
 alias du='du -ch'
 alias dus='for each in $(find . -maxdepth 1 -type d) ; do du -hs "$each" | head -n1; done | sort -rh'
 alias dmesg='dmesg --color=auto'
-alias diff="$HOME/.colordiff"
+alias diff="colordiff"
 alias grep='grep --color=auto'
 alias ls='ls -hF --color=auto'
 alias lsl='ls -halF --color=auto'
