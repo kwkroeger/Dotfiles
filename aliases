@@ -11,6 +11,7 @@ alias dmesg='dmesg --color=auto'
 alias diff="$HOME/.colordiff"
 alias grep='grep --color=auto'
 alias ls='ls -hF --color=auto'
+alias lsl='ls -halF --color=auto'
 alias mkdir='mkdir -pv'
 alias psg='ps auwx | grep'
 

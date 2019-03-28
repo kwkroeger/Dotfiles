@@ -15,4 +15,7 @@ export LESS='-R'
 unset MAILCHECK
 
 ## TERMINAL ##
+export IGNOREEOF="1"
 export TERM=xterm-256color
+stty stop ''; stty start '';
+stty -ixon -ixoff
