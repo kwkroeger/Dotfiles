@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# ext install ms-python.python
+# ext install ms-vscode.theme-tomorrowkit
+# ext install humao.rest-client
+# ext install yummygum.city-lights-icon-vsc
+# ext install christian-kohler.path-intellisense
+# ext install esbenp.prettier-vscode
+
+code --install-extensions ms-python.python ms-vscode.theme-tomorrowkit humao.rest-client yummygum.city-lights-icon-vsc christian-kohler.path-intellisense esbenp.prettier-vscode
