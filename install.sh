@@ -40,7 +40,7 @@ install_antibody() {
 
   download
   extract || true
-  mv -f "$TMPDIR"/antibody $HOME/.antibody
+  mv -f "$TMPDIR"/antibody $HOME/.bin/antibody
 }
 
 #---  FUNCTION  -----------------------------------------------------------------------------------
