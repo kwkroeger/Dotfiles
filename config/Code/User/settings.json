@@ -43,7 +43,7 @@
     "city-lights-icons-vsc.hidesExplorerArrows": true,
     "workbench.colorTheme": "Tomorrow Night",
     "workbench.colorCustomizations": {
-        "statusBar.background": "#0072be"
+        "statusBar.background": "#247ab3"
     },
     "workbench.statusBar.visible": true
 }
