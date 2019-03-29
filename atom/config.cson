@@ -16,11 +16,3 @@
     showInvisibles: true
   fonts:
     fontFamily: "Hack"
-
-".python.regexp.source":
-  editor:
-    tabLength: 2
-
-".python.source":
-  editor:
-    autoIndentOnPaste: true
