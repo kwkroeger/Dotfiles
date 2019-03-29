@@ -20,8 +20,9 @@ fi
 if type pygmentize >/dev/null 2>&1; then
   export LESSCOLORIZER='pygmentize'
 fi
-#export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s"
-#export LESS=' -R -N'
+
+## LS COLORS ##
+eval "$(dircolors $HOME/.dircolors)"
 
 ## MAIL ##
 unset MAILCHECK
