@@ -1,9 +1,5 @@
 $include /etc/inputrc
 
-# Set VIM bindings
-set editing-mode vi
-set keymap vi-command
-
 # Make Tab autocomplete regardless of filename case
 set completion-ignore-case on
 set completion-prefix-display-length 3
