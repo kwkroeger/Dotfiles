@@ -1,0 +1,17 @@
+Host *
+
+  # Compression
+  Compression=yes
+
+  # Connection Multiplexing
+  ControlMaster auto
+  ControlPath ~/.ssh/multiplex/%r@%h:%p
+  ControlPersist yes
+
+  # Keep Alive
+  TCPKeepAlive=yes
+  ServerAliveInterval=20
+  ServerAliveCountMax=10
+
+  # Protocol
+  Protocol 2
