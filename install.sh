@@ -105,4 +105,9 @@ if [[ ! -f $HOME/.extras ]]; then
   " > $HOME/.extras
 fi
 
+if [[ ! -d $HOME/.ssh/multiplex ]]; then
+  mkdir $HOME/.ssh/multiplex
+  chmod 700 $HOME/.ssh/multiplex
+fi
+
 echo "Installation to $HOME complete!"
