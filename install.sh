@@ -65,9 +65,9 @@ install_files() {
   for file in "${files[@]}"; do
     if [[ $file == "install.sh" ]]; then
       continue
-    elif [[ $file == "readme.md" ]]; then                                                            
-      continue                                                                                      
-    else 
+    elif [[ $file == "readme.md" ]]; then
+      continue
+    else
       cp -f $file $HOME/.$file
     fi
   done
@@ -80,10 +80,21 @@ install_dirs
 
 install_antibody
 
-rm -rf ~/.config/base16-shell 
-git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+if type git >/dev/null 2>&1; then
+  git config --global user.name "kwkroeger"
+  git config --global user.email "3936667+kwkroeger@users.noreply.github.com"
 
-vim +PlugInstall +qa
+  rm -rf ~/.config/base16-shell
+  git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+
+  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+  ~/.fzf/install --all
+
+	vim +PlugInstall +qa
+
+else
+  echo "Unable to install base16, fzf, git config, and vim as git is not available"
+fi
 
 if [[ ! -f $HOME/.extras ]]; then
   echo "
