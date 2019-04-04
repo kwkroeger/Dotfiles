@@ -35,6 +35,7 @@ antibody () {
 	esac
 }
 
+unset SPACESHIP_ROOT SPACESHIP_VERSION
 
 source <(antibody init)
 
