@@ -78,7 +78,7 @@ source "$HOME/.shared"
 ## BINDINGS ##
 bindkey '^r' history-incremental-search-backward # Ctrl+R
 bindkey '^[[Z' autosuggest-accept # Shift+Tab
-bindkey '^A' vi-end-of-line # A
-bindkey '^E' vi-beginning-of-line # E
+bindkey '^A' vi-beginning-of-line # A
+bindkey '^E' vi-end-of-line # E
 
 cd $HOME
