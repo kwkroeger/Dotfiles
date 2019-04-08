@@ -114,9 +114,20 @@ nnoremap <silent> <F4> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
 " Update Plugins
 nnoremap <silent> <F5> :PlugUpdate<CR>
 
-
 " Easy Window Switching
 nmap <silent> <C-m> :wincmd l<CR>
+
+" More intuitive start and end
+noremap <buffer> <silent> - 0
+noremap <buffer> <silent> = $
+noremap 0 <Nop>
+noremap $ <Nop>
+
+" I like to keep my hands wider
+noremap j h
+noremap k gj
+noremap l gk
+noremap ; l
 
 call plug#begin('~/.vim/plugged')
 " Core
