@@ -117,17 +117,24 @@ nnoremap <silent> <F5> :PlugUpdate<CR>
 " Easy Window Switching
 nmap <silent> <C-m> :wincmd l<CR>
 
+" I like to keep my hands wider
+noremap j h
+noremap l gj
+noremap ; l
+
 " More intuitive start and end
 noremap <buffer> <silent> - 0
 noremap <buffer> <silent> = $
 noremap 0 <Nop>
 noremap $ <Nop>
 
-" I like to keep my hands wider
-noremap j h
-noremap k gj
-noremap l gk
-noremap ; l
+" Tab as ESC
+nnoremap <Tab> <Esc>
+vnoremap <Tab> <Esc>gV
+onoremap <Tab> <Esc>
+cnoremap <Tab> <C-C><Esc>
+inoremap <Tab> <Esc>`^
+inoremap <Leader><Tab> <Tab>
 
 call plug#begin('~/.vim/plugged')
 " Core
