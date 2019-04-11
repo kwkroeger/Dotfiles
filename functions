@@ -1,0 +1,5 @@
+#!/bin/sh
+
+rmi() {
+  find . -maxdepth 1 -type f -inum "$1" -delete
+}

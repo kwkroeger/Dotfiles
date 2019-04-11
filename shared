@@ -11,11 +11,14 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 BASE16_THEME="seti"
 
+## TOOLS ##
+export PATH=$HOME/.bin:$PATH
+
 ## ALIASES ##
 source "$HOME/.aliases"
 
-## TOOLS ##
-export PATH=$HOME/.bin:$PATH
+## FUNCTIONS ##
+source "$HOME/.functions"
 
 ## VARIABLES ##
 source "$HOME/.variables"
