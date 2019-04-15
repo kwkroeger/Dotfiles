@@ -13,8 +13,8 @@ export LANG=en_US.UTF-8
 
 ## LESS ##
 
-if type lesspipe.sh >/dev/null 2>&1; then
-  export LESSOPEN='|lesspipe.sh %s'
+if type lesspipe >/dev/null 2>&1; then
+  export LESSOPEN='|lesspipe %s'
 fi
 
 if type pygmentize >/dev/null 2>&1; then
