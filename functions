@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# Ripgrep with type filter
+ackt() {
+  TYPE=$1
+  TYPE_FILTER="$TYPE:*.$TYPE"
+  rg --type-add "$TYPE_FILTER" -t$TYPE $2
+}
+alias rgt=ackt
+
+# Remove by inode
 rmi() {
   find . -maxdepth 1 -type f -inum "$1" -delete
 }

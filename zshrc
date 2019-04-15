@@ -67,6 +67,8 @@ for package in $ohmy; do
   antibody bundle robbyrussell/oh-my-zsh path:plugins/$package
 done
 
+antibody bundle paulirish/git-open
+
 ## THEME ##
 . "$HOME/.spaceship"
 
