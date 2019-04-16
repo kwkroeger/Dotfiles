@@ -1,12 +1,12 @@
 #!/bin/sh
 
 # Ripgrep with type filter
-ackt() {
+rgt() {
   TYPE=$1
   TYPE_FILTER="$TYPE:*.$TYPE"
   rg --type-add "$TYPE_FILTER" -t$TYPE $2
 }
-alias rgt=ackt
+alias ackt=rgt
 
 # Remove by inode
 rmi() {
