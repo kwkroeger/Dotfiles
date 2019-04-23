@@ -227,15 +227,15 @@ EXEC                    01;32   # This is for files with execute permission:
 .ogv    01;36
 .ogx    01;36
 
-## Config files (cyan)
-.conf       00;36
-.config     00;36
-.cnf        00;36
-.cfg        00;36
-.ini        00;36
-.properties 00;36
-.yaml       00;36
-.vcl        00;36 # Varnish
+## Config files (yellow)
+.conf       00;33
+.config     00;33
+.cnf        00;33
+.cfg        00;33
+.ini        00;33
+.properties 00;33
+.yaml       00;33
+.vcl        00;33 # Varnish
 
 ## Source code files (yellow)
 .c              00;33
@@ -258,12 +258,12 @@ EXEC                    01;32   # This is for files with execute permission:
 .fsx            00;33 # fsharp script
 .go             00;33
 
-## Data / database (green)
-.db     00;32
-.sql    00;32
-.json   00;32
-.plist  00;32 # OSX properties
-.xml    00;32
+## Data / database (yellow)
+.db     00;33
+.sql    00;33
+.json   00;33
+.plist  00;33 # OSX properties
+.xml    00;33
 
 ## Machine generated files / non-important (bright black)
 .log        01;30

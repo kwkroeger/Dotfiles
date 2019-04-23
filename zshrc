@@ -79,9 +79,10 @@ autoload -U promptinit && promptinit
 source "$HOME/.shared"
 
 ## BINDINGS ##
-bindkey '^r' history-incremental-search-backward # Ctrl+R
-bindkey '^[[Z' autosuggest-accept # Shift+Tab
-bindkey '^A' vi-beginning-of-line # A
-bindkey '^E' vi-end-of-line # E
+bindkey '^[[Z' autosuggest-accept # Shift+Tab'
+bindkey '^A' beginning-of-line # A
+bindkey '^E' end-of-line # E
+bindkey '^[' backward-word
+bindkey '^]' forward-word
 
 cd $HOME
