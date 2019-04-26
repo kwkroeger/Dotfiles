@@ -68,7 +68,7 @@ install_files() {
     elif [[ $file == "readme.md" ]]; then
       continue
     else
-      cp -f $file $HOME/.$file
+      cp -f "$file" "$HOME"/."$file"
     fi
   done
 }
