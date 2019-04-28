@@ -22,7 +22,9 @@ if type pygmentize >/dev/null 2>&1; then
 fi
 
 ## LS COLORS ##
-eval "$(dircolors $HOME/.dircolors)"
+if type dircolors >/dev/null 2>&1; then
+  eval "$(dircolors $HOME/.dircolors)"
+fi
 
 ## MAIL ##
 unset MAILCHECK
