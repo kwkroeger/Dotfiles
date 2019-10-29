@@ -83,6 +83,7 @@ install_antibody
 if type git >/dev/null 2>&1; then
   git config --global user.name "kwkroeger"
   git config --global user.email "3936667+kwkroeger@users.noreply.github.com"
+  echo "Git Email set to github.com, change if on a CORP network"
 
   rm -rf ~/.config/base16-shell
   git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
