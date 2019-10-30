@@ -50,7 +50,6 @@ install_antibody() {
 install_dirs() {
   directories=($(ls -p | grep /))
   for dir in "${directories[@]}"; do
-    echo $dir
     mkdir -p $HOME/.$dir
     cp -rf $dir/* $HOME/.$dir/
   done
