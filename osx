@@ -19,19 +19,19 @@ brew install moreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, `g`-prefixed.
 brew install findutils
 # Install GNU `sed`, overwriting the built-in `sed`.
-brew install gnu-sed --with-default-names
+brew install gnu-sed
 # Install a modern version of Bash.
 brew install bash
 brew install bash-completion2
 
 # Install `wget` with IRI support.
-brew install wget --with-iri
+brew install wget
 
 # Install GnuPG to enable PGP-signing commits.
 brew install gnupg
 
 # Install more recent versions of some macOS tools.
-brew install vim --with-override-system-vi
+brew install vim
 brew install grep
 brew install openssh
 brew install screen
@@ -54,9 +54,6 @@ brew install git-lfs
 
 # Git comes with diff-highlight, but isn't in the PATH
 ln -sf "$(brew --prefix)/share/git-core/contrib/diff-highlight/diff-highlight" /usr/local/bin/diff-highlight
-
-brew install gs
-brew install jq
 
 brew tap miserlou/loop https://github.com/Miserlou/Loop.git
 brew install loop --HEAD
