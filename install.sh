@@ -77,11 +77,7 @@ echo "Installing to $HOME"
 install_files
 install_dirs
 
-if [ "$(uname)" = "Darwin" ]; then
-  curl -sfL git.io/antibody | sh -s - -b /usr/local/bin
-elif [ "$(uname)" = "Linux" ]; then
-  install_antibody
-fi
+install_antibody
 
 if type git >/dev/null 2>&1; then
   git config --global user.name "kwkroeger"
