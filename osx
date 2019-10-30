@@ -65,6 +65,7 @@ brew install pigz
 brew install pv
 brew install rename
 brew install ripgrep
+brew install shellcheck
 brew install ssh-copy-id
 brew install tree
 

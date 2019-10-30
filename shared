@@ -17,7 +17,8 @@ export PATH=$HOME/.bin:$PATH
 if [ "$(uname)" = "Darwin" ]; then
   export PATH=$HOME/.bin/osx:$PATH
   if type brew >/dev/null 2>&1; then
-    export PATH=`$(brew --prefix coreutils)/libexec/gnubin`:$PATH
+    export PATH='/usr/local/opt/coreutils/libexec/gnubin':$PATH
+    export PATH='/usr/local/opt/findutils/libexec/gnubin':$PATH
   fi
 elif [ "$(uname)" = "Linux" ]; then
   export PATH=$HOME/.bin/linux:$PATH

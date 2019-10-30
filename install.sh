@@ -50,9 +50,9 @@ install_antibody() {
 install_dirs() {
   directories=($(ls -p | grep /))
   for dir in "${directories[@]}"; do
-    cp -rf $dir .$dir
-    cp -rf .$dir $HOME
-    rm -rf .$dir
+    echo $dir
+    mkdir -p $HOME/.$dir
+    cp -rf $dir/* $HOME/.$dir/
   done
 }
 
@@ -68,7 +68,7 @@ install_files() {
     elif [[ $file == "readme.md" ]]; then
       continue
     else
-      cp -f "$file" "$HOME"/."$file"
+      cp -f "$file" "$HOME/.$file"
     fi
   done
 }
@@ -92,6 +92,7 @@ if type git >/dev/null 2>&1; then
   rm -rf ~/.config/base16-shell
   git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
 
+  rm -rf ~/.fzf
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   ~/.fzf/install --all
 
