@@ -19,7 +19,7 @@ install_antibody() {
   last_version() {
     curl -s https://raw.githubusercontent.com/getantibody/homebrew-tap/master/Formula/antibody.rb |
       grep url |
-      cut -f8 -d'/'
+      cut -f8 -d'/' | tail -n1
   }
 
   download() {

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+xcode-select --install
+
 if ! type brew >/dev/null 2>&1; then
  echo "Brew is not installed, installing."
  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -20,9 +22,12 @@ brew install moreutils
 brew install findutils
 # Install GNU `sed`, overwriting the built-in `sed`.
 brew install gnu-sed
-# Install a modern version of Bash.
+# Install a modern version of Bash and ZSH
 brew install bash
 brew install bash-completion2
+brew install zsh
+brew install zsh-completions
+sudo -s 'echo /usr/local/bin/zsh >> /etc/shells' && chsh -s /usr/local/bin/zsh
 
 # Install `wget` with IRI support.
 brew install wget
@@ -52,6 +57,8 @@ brew install fd
 brew install git
 brew install git-lfs
 
+git config --global color.ui auto
+
 # Git comes with diff-highlight, but isn't in the PATH
 ln -sf "$(brew --prefix)/share/git-core/contrib/diff-highlight/diff-highlight" /usr/local/bin/diff-highlight
 
@@ -68,6 +75,15 @@ brew install ripgrep
 brew install shellcheck
 brew install ssh-copy-id
 brew install tree
+
+brew cask install \
+visual-studio-code \
+notion \
+google-chrome \
+firefox-developer-edition \
+iterm2 \
+
+git config --global core.editor 'code --wait'
 
 # Remove outdated versions from the cellar.
 brew cleanup
