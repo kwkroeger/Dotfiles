@@ -62,6 +62,7 @@ git config --global color.ui auto
 # Git comes with diff-highlight, but isn't in the PATH
 ln -sf "$(brew --prefix)/share/git-core/contrib/diff-highlight/diff-highlight" /usr/local/bin/diff-highlight
 
+brew install jq
 brew tap miserlou/loop https://github.com/Miserlou/Loop.git
 brew install loop --HEAD
 
