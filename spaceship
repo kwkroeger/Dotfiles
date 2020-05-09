@@ -4,11 +4,8 @@ SPACESHIP_PROMPT_ORDER=(
   dir           # Current directory section
   git           # Git section (git_branch + git_status)
   docker        # Docker section
-  aws           # Amazon Web Services section
   venv          # virtualenv section
   pyenv         # Pyenv section
-  kubecontext   # Kubectl context section
-  terraform     # Terraform workspace section
   line_sep      # Line break
   battery       # Battery level and status
   jobs          # Background jobs indicator

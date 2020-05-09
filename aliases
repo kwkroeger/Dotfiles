@@ -28,7 +28,7 @@ fi
 
 alias mkdir='mkdir -pv'
 alias ssh='ssh -x'
-alias ssy='ssh -CX -c arcfour,blowfish-cbc'
+alias ssy='ssh -CX'
 alias wget='wget -c'
 
 # Shortcuts
