@@ -82,7 +82,10 @@ source "$HOME/.shared"
 bindkey '^[[Z' autosuggest-accept # Shift+Tab'
 bindkey '^A' beginning-of-line # A
 bindkey '^E' end-of-line # E
-bindkey '^[' backward-word
-bindkey '^]' forward-word
+bindkey '^S' backward-word # S
+bindkey '^D' forward-word # D
+bindkey "[H" beginning-of-line
+bindkey "[F" end-of-line
+bindkey "^M" accept-line
 
 cd $HOME
