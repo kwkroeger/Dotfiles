@@ -39,7 +39,6 @@ unset SPACESHIP_ROOT SPACESHIP_VERSION
 
 source <(antibody init)
 
-antibody bundle zdharma/fast-syntax-highlighting
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle zsh-users/zsh-completions
 
