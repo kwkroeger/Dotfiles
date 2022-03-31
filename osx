@@ -53,8 +53,14 @@ brew install xz
 
 # Install other useful binaries.
 brew install bat
+brew install dog
+brew install duf
+brew install dust
 brew install fd
+brew install glances
+brew intall gping
 brew install git
+brew install git-delta
 brew install git-lfs
 
 git config --global color.ui auto
@@ -63,13 +69,16 @@ git config --global color.ui auto
 ln -sf "$(brew --prefix)/share/git-core/contrib/diff-highlight/diff-highlight" /usr/local/bin/diff-highlight
 
 brew install jq
+brew install lsd
+brew install llvm
 brew tap miserlou/loop https://github.com/Miserlou/Loop.git
 brew install loop --HEAD
-
+brew install lsd
 brew install mtr
 brew install ncdu
 brew install p7zip
 brew install pigz
+brew install procs
 brew install pv
 brew install rename
 brew install ripgrep
