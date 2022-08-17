@@ -5,13 +5,17 @@ Host *
 
   # Connection Multiplexing
   ControlMaster auto
-  ControlPath ~/.ssh/multiplex/%r@%h:%p
+  ControlPath ~/.ssh/multiplex/%r@%h:%p.sock
   ControlPersist yes
 
   # Keep Alive
   TCPKeepAlive=yes
-  ServerAliveInterval=20
+  ServerAliveInterval=60
   ServerAliveCountMax=10
 
   # Protocol
   Protocol 2
+
+Host localhost
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
