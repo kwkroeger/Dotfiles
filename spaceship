@@ -4,10 +4,10 @@ SPACESHIP_PROMPT_ORDER=(
   dir           # Current directory section
   git           # Git section (git_branch + git_status)
   docker        # Docker section
-  venv          # virtualenv section
-  pyenv         # Pyenv section
   line_sep      # Line break
   battery       # Battery level and status
+  exec_time     # Execution time
+  async         # Async jobs indicator 
   jobs          # Background jobs indicator
   exit_code     # Exit code section
   char          # Prompt character
@@ -15,6 +15,8 @@ SPACESHIP_PROMPT_ORDER=(
 
 # Colors can be 256 codes [1-256]
 # https://upload.wikimedia.org/wikipedia/commons/1/15/Xterm_256color_chart.svg
+
+SPACESHIP_PROMPT_ASYNC=false
 
 SPACESHIP_PROMPT_ADD_NEWLINE=false
 SPACESHIP_PROMPT_SEPARATE_LINE=false

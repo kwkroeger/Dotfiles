@@ -41,6 +41,7 @@ source <(antibody init)
 
 antibody bundle zsh-users/zsh-autosuggestions
 antibody bundle zsh-users/zsh-completions
+antibody bundle zdharma-continuum/fast-syntax-highlighting
 
 ## Oh My ZSH ##
 ohmy=(
@@ -66,12 +67,10 @@ for package in $ohmy; do
   antibody bundle robbyrussell/oh-my-zsh path:plugins/$package
 done
 
-antibody bundle paulirish/git-open
-
 ## THEME ##
 . "$HOME/.spaceship"
 
-antibody bundle denysdovhan/spaceship-prompt
+antibody bundle spaceship-prompt/spaceship-prompt
 autoload -U promptinit && promptinit
 
 ## SHARED ##

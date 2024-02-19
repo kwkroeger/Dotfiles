@@ -15,10 +15,10 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 ###############################################################################
 
 # Set computer name (as done via System Preferences → Sharing)
-#sudo scutil --set ComputerName "Kurts-Air"
-#sudo scutil --set HostName "Kurts-Air"
-#sudo scutil --set LocalHostName "Kurts-Air"
-#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "Kurts-Air"
+#sudo scutil --set ComputerName "kwkroeger-mbp"
+#sudo scutil --set HostName "kwkroeger-mbp"
+#sudo scutil --set LocalHostName "kwkroeger-mbp"
+#sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "kwkroeger-mbp"
 
 # Disable the sound effects on boot
 sudo nvram SystemAudioVolume=" "
@@ -176,6 +176,9 @@ sudo pmset -a hibernatemode 0
 # Screen                                                                      #
 ###############################################################################
 
+# Re-enable subpixel antialiasing
+defaults write -g CGFontRenderingFontSmoothingDisabled -bool FALSE
+
 # Require password immediately after sleep or screen saver begins
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
@@ -266,7 +269,7 @@ defaults write com.apple.finder WarnOnEmptyTrash -bool false
 defaults write com.apple.NetworkBrowser BrowseAllInterfaces -bool true
 
 # Show the ~/Library folder
-chflags nohidden ~/Library
+chflags nohidden ~/Library && xattr -d com.apple.FinderInfo ~/Library
 
 # Show the /Volumes folder
 sudo chflags nohidden /Volumes
